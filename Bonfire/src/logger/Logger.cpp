@@ -37,6 +37,18 @@ Logger::~Logger() {
 	for (auto& t : m_threads) t.join();
 }
 
+void Logger::addFileHandler(std::string fileName, std::string logDir, std::string level){
+	int intLevel = TranslateLevel(level);
+	// create a new handler unique ptr and add it to the vector of handlers
+	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(fileName, logDir, intLevel)));
+}
+
+void Logger::addTerminalHandler(std::string level){
+	int intLevel = TranslateLevel(level);
+	// create a new handler unique ptr and add it to the vector of handlers
+	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(intLevel)));
+}
+
 void Logger::debug(std::string entry) {
 	if (m_level < DEBUG_LEVEL)
 		return;
@@ -149,7 +161,7 @@ void Logger::Listener() {
 		// lock the mutex
 		m_queueMutex.lock();
 		if (!m_queue.empty()) {
-			WriteToFile(m_queue.front());
+			OutputHandlers(m_queue.front());
 			m_queue.pop();
 		}
 		m_queueMutex.unlock();
@@ -158,7 +170,7 @@ void Logger::Listener() {
 			// finish writitng the rest of the queue
 			m_queueMutex.lock();
 			for (unsigned int i = 0; i < m_queue.size(); i++) {
-				WriteToFile(m_queue.front());
+				OutputHandlers(m_queue.front());
 				m_queue.pop();
 			}
 			m_queueMutex.unlock();
@@ -168,14 +180,11 @@ void Logger::Listener() {
 	}
 }
 
-void Logger::WriteToFile(std::string entry) {
-	std::ofstream logFS;
-
-	//std::cout << entry << std::endl;
-
-	logFS.open(m_filePath + m_fileName, std::ios::app);				//open the file in append mode
-	logFS << entry << std::endl;
-	logFS.close();
-
-};
+void Logger::OutputHandlers(std::string entry) {
+	// loop through all the handlers and tell them to 
+	// perform their implementation of Output
+	for (unsigned int i = 0; i < m_handlers.size(); i++) {
+		m_handlers.at(i)->Output(entry, m_level);
+	}
+}
 

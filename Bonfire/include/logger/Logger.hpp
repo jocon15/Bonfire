@@ -1,6 +1,12 @@
 #pragma once
 
+//#include "../handler/Handler.hpp"
 #include "../core.hpp"
+#include "../handler/Handler.hpp"
+#include "../handler/handlers/FileHandler.hpp"
+#include "../handler/handlers/TerminalHandler.hpp"
+
+
 
 // definitions for logging levels
 
@@ -29,7 +35,10 @@
 
 class BONFIRE_API exampleClass {
 public:
-	exampleClass(int num) { this->num = num; };
+	exampleClass(int num) { 
+		this->num = num;
+		//Handler* shark = new FileHandler();
+	};
 	int getNum() { return num; };
 private:
 	int num;
@@ -64,6 +73,13 @@ public:
 	* Destructor
 	*/
 	~Logger();
+
+
+	void addFileHandler(std::string fileName, std::string logDir, std::string level);
+
+
+	void addTerminalHandler(std::string level);
+
 
 	/**
 	* Submit a debug entry to the logger
@@ -113,6 +129,7 @@ private:
 	std::mutex m_queueMutex;
 	std::queue<std::string> m_queue;
 	std::vector<std::thread> m_threads;
+	std::vector<std::unique_ptr<Handler>> m_handlers;
 
 	/**
 	* Push a message onto the queue
@@ -190,5 +207,5 @@ private:
 	/**
 	* Writing to file logic
 	*/
-	void WriteToFile(std::string entry);
+	void OutputHandlers(std::string entry);
 };

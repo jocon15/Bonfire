@@ -22,6 +22,7 @@
 
 int main() {
 	Logger logger = Logger("bonFireLogger", "log.txt", "", "INFO", " : ", 1);
+	logger.addFileHandler("handlerLog.txt", "", "INFO");
 
 
 	logger.info("Hello world");
