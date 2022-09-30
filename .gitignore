@@ -1,3 +1,16 @@
+# Folders
+.vs/
+bin/
+bin-int/
+
+# Files
+*Doxyfile
+DoxyFile
+*.sln
+*.vcxproj
+*.filters
+*.user
+
 # Prerequisites
 *.d
 
