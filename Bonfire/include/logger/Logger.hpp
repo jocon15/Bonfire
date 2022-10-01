@@ -2,11 +2,10 @@
 
 //#include "../handler/Handler.hpp"
 #include "../core.hpp"
+#include "../queue_member/queue_member.hpp"
 #include "../handler/Handler.hpp"
 #include "../handler/handlers/FileHandler.hpp"
 #include "../handler/handlers/TerminalHandler.hpp"
-
-
 
 // definitions for logging levels
 
@@ -32,20 +31,6 @@
 * This allows the main thread to perform tasks independent of the
 * overhead of writing to a file every time theres a log message.
 */
-
-class BONFIRE_API exampleClass {
-public:
-	exampleClass(int num) { 
-		this->num = num;
-		//Handler* shark = new FileHandler();
-	};
-	int getNum() { return num; };
-private:
-	int num;
-};
-
-
-
 class BONFIRE_API Logger {
 public:
 	/**
@@ -53,7 +38,8 @@ public:
 	*/
 	Logger();
 
-	/* Constructor
+	/**
+	* Constructor
 	*
 	* @param loggerName the name of the logger
 	* @param fileName the name of the file the logger writes to
@@ -74,12 +60,21 @@ public:
 	*/
 	~Logger();
 
+	/**
+	* Add a file handler
+	* 
+	* @param fileName the name of the log file
+	* @param logDir the path that the fileName file exists in (not including the fileName)
+	* @param level the logging level
+	*/
+	void addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level);
 
-	void addFileHandler(std::string fileName, std::string logDir, std::string level);
-
-
-	void addTerminalHandler(std::string level);
-
+	/**
+	* Add a terminal handler
+	* 
+	* @param level the logging level
+	*/
+	void addTerminalHandler(std::string format, std::string level);
 
 	/**
 	* Submit a debug entry to the logger
@@ -127,7 +122,7 @@ private:
 
 	std::atomic_bool m_stopListener = false;
 	std::mutex m_queueMutex;
-	std::queue<std::string> m_queue;
+	std::queue<QueueMember> m_queue;
 	std::vector<std::thread> m_threads;
 	std::vector<std::unique_ptr<Handler>> m_handlers;
 
@@ -135,17 +130,9 @@ private:
 	* Push a message onto the queue
 	*
 	* @param level the logging level of the entry
-	* @param entry the message to log
+	* @param message the message to log
 	*/
-	void PushToQueue(std::string level, std::string entry);
-
-	/**
-	* Construct the full entry string
-	*
-	* @param level the logging level of the entry
-	* @param entry the message to log
-	*/
-	std::string ConstructEntry(std::string level, std::string entry);
+	void PushToQueue(std::string level, std::string message);
 
 	/**
 	* Get the current local date and time
@@ -207,5 +194,5 @@ private:
 	/**
 	* Writing to file logic
 	*/
-	void OutputHandlers(std::string entry);
+	void OutputHandlers(QueueMember member);
 };

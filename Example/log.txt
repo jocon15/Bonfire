@@ -1,6 +1,18 @@
-INFOrootFri Sep 30 12:48:48 2022Hello world
-INFOrootFri Sep 30 12:52:30 2022Hello world
-INFO--bonFireLogger--Fri Sep 30 12:55:48 2022--Hello world
-INFO:bonFireLogger:Fri Sep 30 12:56:43 2022:Hello world
-INFO : bonFireLogger : Fri Sep 30 12:57:21 2022 : Hello world
-INFO : bonFireLogger : Fri Sep 30 12:57:58 2022 : Hello world
+INFO--bonFireLogger--Sat Oct  1 00:13:39 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:20:04 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:21:14 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:24:47 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:25:07 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:26:57 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:27:09 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:27:30 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:28:11 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:29:11 2022--Hello worldM
+INFO--bonFireLogger--Sat Oct  1 00:30:07 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:30:22 2022--
+INFO--bonFireLogger--Sat Oct  1 00:32:26 2022--Hello world
+INFO---%bonFireLogger---%Sat Oct  1 00:34:19 2022---%Hello world
+INFO--bonFireLogger--Sat Oct  1 00:34:38 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:41:35 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:45:14 2022--Hello world
+INFO--bonFireLogger--Sat Oct  1 00:45:49 2022--Hello world

@@ -37,16 +37,16 @@ Logger::~Logger() {
 	for (auto& t : m_threads) t.join();
 }
 
-void Logger::addFileHandler(std::string fileName, std::string logDir, std::string level){
+void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level){
 	int intLevel = TranslateLevel(level);
 	// create a new handler unique ptr and add it to the vector of handlers
-	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(fileName, logDir, intLevel)));
+	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(fileName, logDir, format, intLevel)));
 }
 
-void Logger::addTerminalHandler(std::string level){
+void Logger::addTerminalHandler(std::string format, std::string level){
 	int intLevel = TranslateLevel(level);
 	// create a new handler unique ptr and add it to the vector of handlers
-	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(intLevel)));
+	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(format, intLevel)));
 }
 
 void Logger::debug(std::string entry) {
@@ -81,22 +81,19 @@ void Logger::critical(std::string entry) {
 
 // ========== Private Definitions ==========
 
-void Logger::PushToQueue(std::string level, std::string entry) {
+void Logger::PushToQueue(std::string level, std::string message) {
 	// build entry before aquiring the lock
-	std::string logEntry = ConstructEntry(level, entry);
-	m_queueMutex.lock();
-	m_queue.push(logEntry);
-	m_queueMutex.unlock();
-}
+	// std::string logEntry = ConstructEntry(level, message);
 
-std::string Logger::ConstructEntry(std::string level, std::string entry) {
-	return level +
-		m_separator +
-		m_loggerName +
-		m_separator +
-		GetDateTime() +
-		m_separator +
-		entry;
+	QueueMember member = QueueMember();
+	member.loggerName = m_loggerName;
+	member.level = level;
+	member.datetime = GetDateTime();
+	member.message = message;
+
+	m_queueMutex.lock();
+	m_queue.push(member);
+	m_queueMutex.unlock();
 }
 
 std::string Logger::GetDateTime() {
@@ -174,17 +171,17 @@ void Logger::Listener() {
 				m_queue.pop();
 			}
 			m_queueMutex.unlock();
-			std::cout << "Listener is done executing" << std::endl;
+			// std::cout << "Listener is done executing" << std::endl;
 			return;
 		}
 	}
 }
 
-void Logger::OutputHandlers(std::string entry) {
+void Logger::OutputHandlers(QueueMember member) {
 	// loop through all the handlers and tell them to 
 	// perform their implementation of Output
 	for (unsigned int i = 0; i < m_handlers.size(); i++) {
-		m_handlers.at(i)->Output(entry, m_level);
+		m_handlers.at(i)->Output(member);
 	}
 }
 

@@ -15,8 +15,8 @@
 
 class TerminalHandler : public Handler {
 public:
-	TerminalHandler(int level = DEBUG_LEVEL);
-	void Output(std::string entry, int level);
+	TerminalHandler(std::string format, int level = DEBUG_LEVEL);
+	void Output(QueueMember member);
 private:
-
+	int m_level;
 };

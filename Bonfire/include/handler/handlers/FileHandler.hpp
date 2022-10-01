@@ -13,8 +13,8 @@
 
 class FileHandler : public Handler {
 public:
-	FileHandler(std::string fileName, std::string logDir = "", int level = DEBUG_LEVEL);
-	void Output(std::string entry, int level);
+	FileHandler(std::string fileName="log.txt", std::string logDir="", std::string format="%L %N %D %M", int level = DEBUG_LEVEL);
+	void Output(QueueMember member);
 private:
 	std::string m_fileName;
 	std::string m_filePath;

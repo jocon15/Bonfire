@@ -22,8 +22,10 @@
 
 int main() {
 	Logger logger = Logger("bonFireLogger", "log.txt", "", "INFO", " : ", 1);
-	logger.addFileHandler("handlerLog.txt", "", "INFO");
+	
+	logger.addFileHandler("log.txt", "", "%L--%N--%D--%M", "INFO");
 
+	logger.addTerminalHandler("[%L] [%N] [%D] [%M]", "INFO");
 
 	logger.info("Hello world");
 }

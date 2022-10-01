@@ -7,7 +7,7 @@
 		#define BONFIRE_API __declspec(dllimport)
 	#endif
 #else
-	#error Game Engine only supports Windows!
+	#error Bonfire only supports Windows!
 #endif
 
 // turn off warnings
