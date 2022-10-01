@@ -21,6 +21,11 @@
 //for some reason it does not like the separater "::" but other ones work
 
 int main() {
+
+	std::cout << "Trying to start" << std::endl;
+	// there's an issue with the dll or how the dll is handeling this
+
+
 	Logger logger = Logger("bonFireLogger", 1);
 	
 	logger.addFileHandler("log.txt", "", "%L--%N--%D--%M", "INFO");

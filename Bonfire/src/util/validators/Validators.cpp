@@ -5,7 +5,7 @@ std::string Validators::ValidateLoggerName(std::string name) {
 		throw std::invalid_argument("Logger name cannot have escape characters");
 	if (name.find(".") != -1)
 		throw std::invalid_argument("Logger name cannot have ");
-	if (name.length() == 0)
+	if (name.size() == 0)
 		throw std::invalid_argument("Logger name cannot be empty");
 	return name;
 }
@@ -15,7 +15,7 @@ std::string Validators::ValidateFileName(std::string name) {
 		throw std::invalid_argument("Logger name cannot have escape characters");
 	if (name.find(" ") != -1)
 		throw std::invalid_argument("Logger name cannot have spaces");
-	if (name.length() == 0)
+	if (name.size() == 0)
 		throw std::invalid_argument("Logger name cannot be empty");
 	return name;
 }

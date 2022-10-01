@@ -23,7 +23,7 @@ Logger::Logger(const Logger&) {
 }
 
 Logger::~Logger() {
-	// tell the thread to begin cleanup
+	// tell the listener thread to begin cleanup
 	m_stopListener = true;
 	// end the stored threads
 	for (auto& t : m_threads) t.join();
@@ -31,7 +31,7 @@ Logger::~Logger() {
 
 void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level){
 	std::string validatedFileName = Validators::ValidateFileName(fileName);
-	std::string validatedLogDir = Validators::ValidateFileName(logDir);
+	std::string validatedLogDir = Validators::ValidateFilePath(logDir);
 	std::string validattedFormat = Validators::ValidateFormat(format);
 	int intLevel = TranslateLevel(level);
 
@@ -121,26 +121,29 @@ int Logger::TranslateLevel(std::string level) {
 }
 
 void Logger::Listener() {
+
+	std::cout << "Listener thread started" << std::endl;
+
 	while (true) {
-		// sleep for 1 second
+		// sleep for m_delay seconds
+		
 		std::this_thread::sleep_for(std::chrono::seconds(m_delay));
-		// lock the mutex
+
 		m_queueMutex.lock();
 		if (!m_queue.empty()) {
 			OutputHandlers(m_queue.front());
 			m_queue.pop();
 		}
 		m_queueMutex.unlock();
-		// chekc to stop
+		// check to stop (start cleanup)
 		if (m_stopListener) {
-			// finish writitng the rest of the queue
+			// finish logging the rest of the entries in the queue
 			m_queueMutex.lock();
 			for (unsigned int i = 0; i < m_queue.size(); i++) {
 				OutputHandlers(m_queue.front());
 				m_queue.pop();
 			}
 			m_queueMutex.unlock();
-			// std::cout << "Listener is done executing" << std::endl;
 			return;
 		}
 	}
