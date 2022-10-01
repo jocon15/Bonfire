@@ -4,22 +4,14 @@
 
 Logger::Logger() {
 	m_loggerName = "root";
-	m_fileName = "log.txt";
-	m_filePath = "";
-	m_level = INFO_LEVEL;
-	m_separator = "";
 	m_delay = DEFAULT_DELAY;
 
 	// start the listener thread and add it to the stored threads
 	m_threads.push_back(std::thread(&Logger::Listener, this));
 }
 
-Logger::Logger(std::string loggerName, std::string fileName, std::string logDir, std::string level, std::string separator, unsigned int delay) {
-	m_loggerName = ValidateLoggerName(loggerName);
-	m_fileName = ValidateFileName(fileName);
-	m_filePath = ValidateFilePath(logDir);
-	m_level = TranslateLevel(level);
-	m_separator = ValidateSeparator(separator);
+Logger::Logger(std::string loggerName, unsigned int delay) {
+	m_loggerName = loggerName;
 	m_delay = delay;
 
 	// start the listener thread and add it to the stored threads
@@ -38,15 +30,22 @@ Logger::~Logger() {
 }
 
 void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level){
+	std::string validatedFileName = Validators::ValidateFileName(fileName);
+	std::string validatedLogDir = Validators::ValidateFileName(logDir);
+	std::string validattedFormat = Validators::ValidateFormat(format);
 	int intLevel = TranslateLevel(level);
-	// create a new handler unique ptr and add it to the vector of handlers
-	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(fileName, logDir, format, intLevel)));
+
+	// add a file handler to the list
+	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(
+		validatedFileName, validatedLogDir, validattedFormat, intLevel)));
 }
 
 void Logger::addTerminalHandler(std::string format, std::string level){
+	std::string validatedFormat = Validators::ValidateFormat(format);
 	int intLevel = TranslateLevel(level);
-	// create a new handler unique ptr and add it to the vector of handlers
-	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(format, intLevel)));
+
+	// add a terminal handler to the list
+	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
 }
 
 void Logger::debug(std::string entry) {
@@ -108,36 +107,6 @@ std::string Logger::GetDateTime() {
 	return dateTime;
 }
 
-std::string Logger::ValidateLoggerName(std::string name) {
-	if (name.find("\\") != -1)
-		throw std::invalid_argument("Logger name cannot have escape characters");
-	if (name.find(".") != -1)
-		throw std::invalid_argument("Logger name cannot have ");
-	if (name.length() == 0)
-		throw std::invalid_argument("Logger name cannot be empty");
-	return name;
-}
-
-std::string Logger::ValidateFileName(std::string name) {
-	if (name.find("\\") != -1)
-		throw std::invalid_argument("Logger name cannot have escape characters");
-	return name;
-}
-
-std::string Logger::ValidateFilePath(std::string path) {
-	if (path.find(".") != -1)
-		throw std::invalid_argument("Logger name cannot have ");
-	return path;
-}
-
-std::string Logger::ValidateSeparator(std::string separator) {
-	if (separator.find("\\") != -1)
-		throw std::invalid_argument("Logger name cannot have escape characters");
-	if (separator.find(".") != -1)
-		throw std::invalid_argument("Logger name cannot have ");
-	return separator;
-}
-
 int Logger::TranslateLevel(std::string level) {
 	if (level == "debug" || level == "DEBUG")
 		return DEBUG_LEVEL;
@@ -184,4 +153,3 @@ void Logger::OutputHandlers(QueueMember member) {
 		m_handlers.at(i)->Output(member);
 	}
 }
-

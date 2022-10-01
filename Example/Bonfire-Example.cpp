@@ -21,11 +21,11 @@
 //for some reason it does not like the separater "::" but other ones work
 
 int main() {
-	Logger logger = Logger("bonFireLogger", "log.txt", "", "INFO", " : ", 1);
+	Logger logger = Logger("bonFireLogger", 1);
 	
 	logger.addFileHandler("log.txt", "", "%L--%N--%D--%M", "INFO");
 
-	logger.addTerminalHandler("[%L] [%N] [%D] [%M]", "INFO");
+	logger.addTerminalHandler("[&1%L&] [%N] [%D] [%M]", "INFO");
 
 	logger.info("Hello world");
 }

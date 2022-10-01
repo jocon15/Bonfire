@@ -5,7 +5,6 @@
 // ========== Protected Definitions ==========
 
 std::string Handler::BuildFormattedEntry(QueueMember member){
-	//return std::string();
 	std::string buildString;
 	unsigned int i = 0;
 
@@ -47,12 +46,6 @@ std::string Handler::BuildFormattedEntry(QueueMember member){
 	}
 	return buildString;
 }
-
-
-
-//Handler::Handler(std::string loggerName) {
-//	m_loggerName = loggerName;
-//}
 
 // ========== Private Definitions ==========
 

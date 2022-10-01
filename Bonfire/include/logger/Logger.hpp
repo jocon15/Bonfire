@@ -2,7 +2,7 @@
 
 //#include "../handler/Handler.hpp"
 #include "../core.hpp"
-#include "../queue_member/queue_member.hpp"
+#include "../util/Util.hpp"
 #include "../handler/Handler.hpp"
 #include "../handler/handlers/FileHandler.hpp"
 #include "../handler/handlers/TerminalHandler.hpp"
@@ -42,13 +42,9 @@ public:
 	* Constructor
 	*
 	* @param loggerName the name of the logger
-	* @param fileName the name of the file the logger writes to
-	* @param logDir the path that the fileName file exists in (not including the fileName)
-	* @param level the logging level
-	* @param separaor the delimitor character(s) in the log entries
 	* @param delay the listener thread delay time between queue checks
 	*/
-	Logger(std::string loggerName, std::string fileName = "log.txt", std::string logDir = "", std::string level = "INFO", std::string separator = "::", unsigned int delay = 1);
+	Logger(std::string loggerName, unsigned int delay = 1);
 
 	/**
 	* Copy constructor
@@ -112,13 +108,10 @@ public:
 	void critical(std::string entry);
 
 private:
-	std::string m_separator; // needs to be validated if user inputs
 	std::string m_loggerName;
-	std::string m_fileName;
 	std::string m_filePath;
 	unsigned int m_delay; // delay in seconds
 	int m_level = INFO_LEVEL;
-
 
 	std::atomic_bool m_stopListener = false;
 	std::mutex m_queueMutex;
@@ -140,42 +133,6 @@ private:
 	* @return the date and time in format "D M d h:m:s Y"
 	*/
 	std::string GetDateTime();
-
-	/**
-	* Validate the passed in logger name
-	*
-	* @param name the logger name input via the constructor
-	*
-	* @return the validated name
-	*/
-	std::string ValidateLoggerName(std::string name);
-
-	/**
-	* Validate the passed in file name
-	*
-	* @param name the file name input via the constructor
-	*
-	* @return the validated name
-	*/
-	std::string ValidateFileName(std::string name);
-
-	/**
-	* Validate the passed in file path
-	*
-	* @param path the file pah input via the constructor
-	*
-	* @return the validated path
-	*/
-	std::string ValidateFilePath(std::string path);
-
-	/**
-	* Validate the passed in separator
-	*
-	* @param separator the separator input via the constructor
-	*
-	* @return the validated separator
-	*/
-	std::string ValidateSeparator(std::string separator);
 
 	/**
 	* Translate the string level into an integer value
