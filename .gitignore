@@ -10,6 +10,8 @@ DoxyFile
 *.vcxproj
 *.filters
 *.user
+*.exp
+*.pdb
 
 # Prerequisites
 *.d
