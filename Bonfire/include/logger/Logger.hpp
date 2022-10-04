@@ -6,6 +6,7 @@
 #include "../handler/Handler.hpp"
 #include "../handler/handlers/FileHandler.hpp"
 #include "../handler/handlers/TerminalHandler.hpp"
+#include "../worker/log_worker.hpp"
 
 // definitions for logging levels
 
@@ -58,7 +59,7 @@ public:
 
 	/**
 	* Add a file handler
-	* 
+	*
 	* @param fileName the name of the log file
 	* @param logDir the path that the fileName file exists in (not including the fileName)
 	* @param level the logging level
@@ -67,7 +68,7 @@ public:
 
 	/**
 	* Add a terminal handler
-	* 
+	*
 	* @param level the logging level
 	*/
 	void addTerminalHandler(std::string format, std::string level);
@@ -108,16 +109,15 @@ public:
 	void critical(std::string entry);
 
 private:
+	QueueManager m_queueManager = QueueManager();
+	HandlerManager m_handlerManager = HandlerManager();
 	std::string m_loggerName;
 	std::string m_filePath;
 	unsigned int m_delay; // delay in seconds
 	int m_level = INFO_LEVEL;
 
-	std::atomic_bool m_stopListener = false;
-	std::mutex m_queueMutex;
-	std::queue<QueueMember> m_queue;
+	//std::mutex m_handlersMutex;
 	std::vector<std::thread> m_threads;
-	std::vector<std::unique_ptr<Handler>> m_handlers;
 
 	/**
 	* Push a message onto the queue
@@ -142,14 +142,4 @@ private:
 	* @return the coresponding integer level of the value
 	*/
 	int TranslateLevel(std::string level);
-
-	/**
-	* Listener thread logic. This thread periodically checks the queue for entries to write to the file system.
-	*/
-	void Listener();
-
-	/**
-	* Writing to file logic
-	*/
-	void OutputHandlers(QueueMember member);
 };

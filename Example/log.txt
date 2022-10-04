@@ -24,3 +24,59 @@ INFO--bonFireLogger--Sat Oct  1 13:22:59 2022--Hello world
 INFO--bonFireLogger--Sat Oct  1 19:22:08 2022--Hello world
 INFO--bonFireLogger--Sat Oct  1 19:24:24 2022--Hello world
 INFO--bonFireLogger--Sat Oct  1 19:28:46 2022--Hello world
+INFO--bonFireLogger--Mon Oct  3 14:21:28 2022--Hello world
+INFO--bonFireLogger--Mon Oct  3 14:22:11 2022--Hello world
+INFO--bonFireLogger--Mon Oct  3 14:27:33 2022--Hello world
+INFO--bonFireLogger--Mon Oct  3 14:28:38 2022--Hello world
+DEBUG--bonFireLogger--Mon Oct  3 14:28:38 2022--For debug purposes only
+INFO--bonFireLogger--Mon Oct  3 14:29:53 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 14:29:53 2022--Uh oh something's wrong!
+INFO--bonFireLogger--Mon Oct  3 14:30:35 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 14:30:35 2022--Uh oh something's wrong!
+INFO--bonFireLogger--Mon Oct  3 15:12:24 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:12:24 2022--Uh oh something's wrong!
+INFO--bonFireLogger--Mon Oct  3 15:14:03 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:14:03 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:14:03 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:16:29 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:16:29 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:16:29 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:22:41 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:22:41 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:22:41 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:23:51 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:23:51 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:23:51 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:26:53 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:26:53 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:26:53 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:28:02 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:28:02 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:28:02 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:28:33 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:28:33 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:28:33 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:30:25 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:30:25 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:30:25 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:30:55 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:30:55 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:30:55 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:32:15 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:32:15 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:32:15 2022--There's an error
+INFO--bonFireLogger--Mon Oct  3 15:51:49 2022--Hello world
+WARNING--bonFireLogger--Mon Oct  3 15:51:49 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Mon Oct  3 15:51:49 2022--There's an error
+INFO--bonFireLogger--Tue Oct  4 14:01:32 2022--Hello world
+DEBUG--bonFireLogger--Tue Oct  4 14:01:32 2022--For debug purposes only
+INFO--bonFireLogger--Tue Oct  4 14:02:23 2022--Hello world
+DEBUG--bonFireLogger--Tue Oct  4 14:02:23 2022--For debug purposes only
+INFO--bonFireLogger--Tue Oct  4 14:02:52 2022--Hello world
+DEBUG--bonFireLogger--Tue Oct  4 14:02:52 2022--For debug purposes only
+INFO--bonFireLogger--Tue Oct  4 14:05:32 2022--Hello world
+WARNING--bonFireLogger--Tue Oct  4 14:05:32 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Tue Oct  4 14:05:32 2022--There's an error
+INFO--bonFireLogger--Tue Oct  4 14:06:29 2022--Hello world
+WARNING--bonFireLogger--Tue Oct  4 14:06:29 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Tue Oct  4 14:06:29 2022--There's an error

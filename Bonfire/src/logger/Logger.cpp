@@ -7,7 +7,7 @@ Logger::Logger() {
 	m_delay = DEFAULT_DELAY;
 
 	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&Logger::Listener, this));
+	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 Logger::Logger(std::string loggerName, unsigned int delay) {
@@ -15,66 +15,71 @@ Logger::Logger(std::string loggerName, unsigned int delay) {
 	m_delay = delay;
 
 	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&Logger::Listener, this));
+	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 Logger::Logger(const Logger&) {
+	m_loggerName = "root";
+	m_delay = DEFAULT_DELAY;
 
+	// start the listener thread and add it to the stored threads
+	// m_threads.push_back(std::thread(&Logger::Listener, this));
+	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 Logger::~Logger() {
 	// tell the listener thread to begin cleanup
-	m_stopListener = true;
+	//	m_stopListener = true;
+	m_queueManager.SetSignalStop();
 	// end the stored threads
 	for (auto& t : m_threads) t.join();
 }
 
-void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level){
+void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level) {
 	std::string validatedFileName = Validators::ValidateFileName(fileName);
 	std::string validatedLogDir = Validators::ValidateFilePath(logDir);
 	std::string validattedFormat = Validators::ValidateFormat(format);
 	int intLevel = TranslateLevel(level);
 
 	// add a file handler to the list
-	m_handlers.push_back(std::unique_ptr<Handler>(new FileHandler(
+	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new FileHandler(
 		validatedFileName, validatedLogDir, validattedFormat, intLevel)));
 }
 
-void Logger::addTerminalHandler(std::string format, std::string level){
+void Logger::addTerminalHandler(std::string format, std::string level) {
 	std::string validatedFormat = Validators::ValidateFormat(format);
 	int intLevel = TranslateLevel(level);
 
 	// add a terminal handler to the list
-	m_handlers.push_back(std::unique_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
+	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
 }
 
 void Logger::debug(std::string entry) {
-	if (m_level < DEBUG_LEVEL)
+	if (m_level > DEBUG_LEVEL)
 		return;
 	PushToQueue("DEBUG", entry);
 }
 
 void Logger::info(std::string entry) {
-	if (m_level < INFO_LEVEL)
+	if (m_level > INFO_LEVEL)
 		return;
 	PushToQueue("INFO", entry);
 }
 
 void Logger::warning(std::string entry) {
-	if (m_level < WARNING_LEVEL)
+	if (m_level > WARNING_LEVEL)
 		return;
 	PushToQueue("WARNING", entry);
 }
 
 void Logger::error(std::string entry) {
-	if (m_level < ERROR_LEVEL)
+	if (m_level > ERROR_LEVEL)
 		return;
 	PushToQueue("ERROR", entry);
 }
 
 void Logger::critical(std::string entry) {
-	if (m_level < CRITICAL_LEVEL)
-		return;
+	// no level is higher than critical
 	PushToQueue("CRITICAL", entry);
 }
 
@@ -90,9 +95,7 @@ void Logger::PushToQueue(std::string level, std::string message) {
 	member.datetime = GetDateTime();
 	member.message = message;
 
-	m_queueMutex.lock();
-	m_queue.push(member);
-	m_queueMutex.unlock();
+	m_queueManager.Push(member);
 }
 
 std::string Logger::GetDateTime() {
@@ -118,41 +121,4 @@ int Logger::TranslateLevel(std::string level) {
 		return ERROR_LEVEL;
 	else
 		return CRITICAL_LEVEL;
-}
-
-void Logger::Listener() {
-
-	std::cout << "Listener thread started" << std::endl;
-
-	while (true) {
-		// sleep for m_delay seconds
-		
-		std::this_thread::sleep_for(std::chrono::seconds(m_delay));
-
-		m_queueMutex.lock();
-		if (!m_queue.empty()) {
-			OutputHandlers(m_queue.front());
-			m_queue.pop();
-		}
-		m_queueMutex.unlock();
-		// check to stop (start cleanup)
-		if (m_stopListener) {
-			// finish logging the rest of the entries in the queue
-			m_queueMutex.lock();
-			for (unsigned int i = 0; i < m_queue.size(); i++) {
-				OutputHandlers(m_queue.front());
-				m_queue.pop();
-			}
-			m_queueMutex.unlock();
-			return;
-		}
-	}
-}
-
-void Logger::OutputHandlers(QueueMember member) {
-	// loop through all the handlers and tell them to 
-	// perform their implementation of Output
-	for (unsigned int i = 0; i < m_handlers.size(); i++) {
-		m_handlers.at(i)->Output(member);
-	}
 }

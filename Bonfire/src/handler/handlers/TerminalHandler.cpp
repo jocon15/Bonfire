@@ -9,69 +9,150 @@ TerminalHandler::TerminalHandler(std::string format, int level){
 void TerminalHandler::Output(QueueMember member){
 	std::string buildString = BuildFormattedEntry(member);
 
-	// print the entry with colors
-	// https://www.youtube.com/watch?v=MvX4tVETjHk
+	bool usingDefaultColor = true;
+	unsigned short int newColor;
+	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_WHITE);
 
-	// different colors on one line
-	// https://stackoverflow.com/questions/27400292/colored-text-in-windows-command-prompt-in-one-line
+	for (unsigned int i = 0; i < buildString.size(); i++) {
+		char currChar = buildString.at(i);
+		if (buildString.at(i) == '&') {
+			// if this is an end color '&' char
+			if (!usingDefaultColor) {
+				// reset color to default
+				usingDefaultColor = true;
+				SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_WHITE);
+			}
+			// this is a start color '&' char
+			else {
+				// check that next char is in bounds
+				if (i + 1 < buildString.size()) {
+					// get the new color
+					newColor = stoi(buildString.substr(i + 1, 1));
 
-	std::cout << buildString << std::endl;
+					// change the printer color 
+					switch (newColor) {
+					case 1:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_BLUE);
+						break;
+					case 2:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_GREEN);
+						break;
+					case 3:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_LIGHT_BLUE);
+						break;
+					case 4:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_RED);
+						break;
+					case 5:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_PINK);
+						break;
+					case 6:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_YELLOW);
+						break;
+					// no case 7 becuase that's a default case
+					case 8:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_GREY);
+						break;
+					case 9:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_BRIGHT_BLUE);
+						break;
+					default:
+						usingDefaultColor = false;
+						SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_WHITE);
+						break;
+					}
 
-	/*
-	* 1 - blue
-	* 2 - green
-	* 3 - cyan
-	* 4 - red
-	* 5 - purple
-	* 6 - yellow
-	* 7 - default white
-	* 8 - grey
-	* 9 - bright blue
-	* 10 - bright green
-	* 11 - bright cyan
-	* 12 - bright red
-	* 13 - pink
-	* 14 - yellow
-	* 15 - bright white
-	*/
+					// skip the color directive character
+					i++;
+				}
+			}
+		}
+		else {
+			// print the character in whatever color
+			std::cout << buildString.at(i);
+		}
+	}
+	std::cout << std::endl;
+	SetConsoleTextAttribute(hcon, CUSTOM_FOREGROUND_WHITE);
+	std::cout.flush();
+}
 
-	//const unsigned short int DEFAULT_COLOR = 7;
-	//unsigned short int color = DEFAULT_COLOR;
-	//unsigned short int newColor;
-	//HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	//SetConsoleTextAttribute(hcon, DEFAULT_COLOR);
+// ========== Protected Definintions ==========
 
-	//for (unsigned int i = 0; i < buildString.size(); i++) {
-	//	if (buildString.at(i) == '&') {
-	//		// if this is an end color char
-	//		if (color != DEFAULT_COLOR) {
-	//			// reset color to default
-	//			SetConsoleTextAttribute(hcon, DEFAULT_COLOR);
-	//		}
-	//		// this is a start color char
-	//		else {
-	//			// check that next char is in bounds
-	//			if (i + 1 < buildString.size()) {
-	//				// get the new color
-	//				newColor = buildString.at(i + 1);
-	//				// set the new color
-	//				SetConsoleTextAttribute(hcon, newColor);
-	//				// skip past the color number
-	//				i++;
-	//			}
-	//		}
-	//	}
-	//	else {
-	//		// print the character in whatever color
-	//		std::cout << buildString.at(i);
-	//	}
-	//}
-	//std::cout << std::endl;
-	//SetConsoleTextAttribute(hcon, DEFAULT_COLOR);
-	// set color back to default
+std::string TerminalHandler::BuildFormattedEntry(QueueMember member) {
+	std::string buildString;
+	unsigned int i = 0;
 
+	for (i = 0; i < m_format.size() - 1; i++) {
+		if (i == m_format.size() - 2) {
+			if (m_format.at(i) == '%') {
+				std::string returned = SortFormatElement(member, m_format.at(i + 1));
+				if (returned != "-1") {
+					buildString += returned;
+				}
+				else {
+					buildString += m_format.at(i);
+				}
+			}
+			else {
+				buildString += m_format.at(i);
+			}
+			return buildString;
+		}
+
+		if (m_format.at(i) == '%') {
+			std::string returned = SortFormatElement(member, m_format.at(i + 1));
+			if (returned != "-1") {
+				buildString += returned;
+				i++;
+			}
+			else {
+				buildString += m_format.at(i);
+			}
+		}
+		else {
+			buildString += m_format.at(i);
+
+		}
+	}
+
+	if (m_format.at(m_format.size() - 2) != '%') {
+		buildString += m_format.at(m_format.size() - 1);
+	}
+	return buildString;
 }
 
 // ========== Private Definitions ==========
 
-
+std::string TerminalHandler::SortFormatElement(QueueMember& member, char letter) {
+	if (letter == 'N') {
+		return member.loggerName;
+	}
+	else if (letter == 'L') {
+		// inject the respective color directive as well as the level
+		if (member.level == "DEBUG")
+			return "&1" + member.level + "&";
+		else if (member.level == "INFO")
+			return "&2" + member.level + "&";
+		else if (member.level == "WARNING")
+			return "&6" + member.level + "&";
+		else
+			return "&4" + member.level + "&";
+	}
+	else if (letter == 'D') {
+		return member.datetime;
+	}
+	else if (letter == 'M') {
+		return member.message;
+	}
+	return "-1";
+}

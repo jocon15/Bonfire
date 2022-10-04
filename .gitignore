@@ -12,6 +12,7 @@ DoxyFile
 *.user
 *.exp
 *.pdb
+notes.txt
 
 # Prerequisites
 *.d
