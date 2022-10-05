@@ -14,7 +14,7 @@ FileHandler::FileHandler(std::string fileName, std::string logDir, std::string f
 
 void FileHandler::Output(QueueMember member) {
 	// don't log anything that is beneath the client defined level
-	if (Translators::TranslateLevel(member.level) >= m_level) {
+	if (Translators::TranslateLevel(member.level) < m_level) {
 		return;
 	}
 	

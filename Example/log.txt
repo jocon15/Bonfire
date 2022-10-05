@@ -1,0 +1,8 @@
+DEBUG--bonFireLogger--Wed Oct  5 13:05:44 2022--For debug purposes only1
+DEBUG--bonFireLogger--Wed Oct  5 13:05:44 2022--For debug purposes only2
+INFO--bonFireLogger--Wed Oct  5 13:05:44 2022--Hello world1
+INFO--bonFireLogger--Wed Oct  5 13:05:44 2022--Hello world2
+WARNING--bonFireLogger--Wed Oct  5 13:05:44 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Wed Oct  5 13:05:44 2022--There's an error
+CRITICAL--bonFireLogger--Wed Oct  5 13:05:44 2022--Oh no, I think I might fall1
+CRITICAL--bonFireLogger--Wed Oct  5 13:05:44 2022--Oh no, I think I might fall2
