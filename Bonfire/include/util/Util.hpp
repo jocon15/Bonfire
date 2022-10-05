@@ -2,3 +2,4 @@
 
 #include "queue/QueueMember.hpp"
 #include "validators/Validators.hpp"
+#include "translators/translators.hpp"

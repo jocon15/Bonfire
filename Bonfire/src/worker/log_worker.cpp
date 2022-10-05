@@ -6,6 +6,7 @@ void LogWorker::Listener(QueueManager& queueManager, HandlerManager& handlerMana
 	QueueMember member;
 
 	while (true) {
+		// wait delay seconds and allow some logs to be added to the queue
 		std::this_thread::sleep_for(std::chrono::seconds(delay));
 
 		if (queueManager.GetQueueSize() > 0) {
@@ -13,12 +14,13 @@ void LogWorker::Listener(QueueManager& queueManager, HandlerManager& handlerMana
 			member = queueManager.Pop();
 			OutputAllHandlers(handlerManager, member);
 		}
-		std::this_thread::sleep_for(std::chrono::seconds(delay));
 		// check to stop (start cleanup)
 		if (queueManager.GetSignalStop()) {
 			// finish logging the rest of the entries in the queue
-			for (unsigned int i = 0; i < queueManager.GetQueueSize(); i++) {
+			int size = queueManager.GetQueueSize();
+			for (unsigned int i = 0; i < size; i++) {
 				member = queueManager.Pop();
+				//std::cout << member.level << std::endl;
 				OutputAllHandlers(handlerManager, member);
 			}
 			return;

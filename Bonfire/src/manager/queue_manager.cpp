@@ -41,4 +41,3 @@ unsigned int QueueManager::GetQueueSize() {
 }
 
 // ========== Private Definitions ==========
-

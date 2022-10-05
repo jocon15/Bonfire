@@ -69,44 +69,44 @@ public:
 	/**
 	* Add a terminal handler
 	*
-	* @param level the logging level
+	* @param message the logging level
 	*/
 	void addTerminalHandler(std::string format, std::string level);
 
 	/**
 	* Submit a debug entry to the logger
 	*
-	* @param entry the message to be logged
+	* @param message the message to be logged
 	*/
-	void debug(std::string entry);
+	void debug(std::string message);
 
 	/**
 	* Submit a info entry to the logger
 	*
-	* @param entry the message to be logged
+	* @param message the message to be logged
 	*/
-	void info(std::string entry);
+	void info(std::string message);
 
 	/**
 	* Submit a warning entry to the logger
 	*
-	* @param entry the message to be logged
+	* @param message the message to be logged
 	*/
-	void warning(std::string entry);
+	void warning(std::string message);
 
 	/**
 	* Submit a error entry to the logger
 	*
-	* @param entry the message to be logged
+	* @param message the message to be logged
 	*/
-	void error(std::string entry);
+	void error(std::string message);
 
 	/**
 	* Submit a critical entry to the logger
 	*
-	* @param entry the message to be logged
+	* @param message the message to be logged
 	*/
-	void critical(std::string entry);
+	void critical(std::string message);
 
 private:
 	QueueManager m_queueManager = QueueManager();
@@ -114,9 +114,6 @@ private:
 	std::string m_loggerName;
 	std::string m_filePath;
 	unsigned int m_delay; // delay in seconds
-	int m_level = INFO_LEVEL;
-
-	//std::mutex m_handlersMutex;
 	std::vector<std::thread> m_threads;
 
 	/**
@@ -133,13 +130,4 @@ private:
 	* @return the date and time in format "D M d h:m:s Y"
 	*/
 	std::string GetDateTime();
-
-	/**
-	* Translate the string level into an integer value
-	*
-	* @param level the string level
-	*
-	* @return the coresponding integer level of the value
-	*/
-	int TranslateLevel(std::string level);
 };

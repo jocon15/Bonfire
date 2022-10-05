@@ -15,10 +15,9 @@ class Handler {
 public:
 	virtual void Output(QueueMember member) = 0;
 protected:
-	virtual std::string BuildFormattedEntry(QueueMember member) = 0;
-	//std::string m_loggerName;
-	//Handler(std::string loggerName);
 	std::string m_format;
+	int m_level;
+	virtual std::string BuildFormattedEntry(QueueMember member) = 0;
 private:
-
+	
 };

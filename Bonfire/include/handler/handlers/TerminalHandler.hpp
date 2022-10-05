@@ -2,17 +2,6 @@
 
 #include "../Handler.hpp"
 
-// termianl handler
-
-// definitions for logging levels
-
-#define CRITICAL_LEVEL 40
-#define CRITICAL_LEVEL 40
-#define ERROR_LEVEL    30
-#define WARNING_LEVEL  20
-#define INFO_LEVEL     10
-#define DEBUG_LEVEL    0
-
 #define CUSTOM_FOREGROUND_BLUE        0x0001
 #define CUSTOM_FOREGROUND_GREEN       0x0002
 #define CUSTOM_FOREGROUND_LIGHT_BLUE  0x0003
@@ -30,6 +19,5 @@ public:
 protected:
 	std::string BuildFormattedEntry(QueueMember member) override;
 private:
-	int m_level;
 	std::string SortFormatElement(QueueMember& member, char letter);
 };

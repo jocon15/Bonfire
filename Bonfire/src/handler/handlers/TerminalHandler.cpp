@@ -7,6 +7,11 @@ TerminalHandler::TerminalHandler(std::string format, int level){
 }
 
 void TerminalHandler::Output(QueueMember member){
+	// don't log anything that is beneath the client defined level
+	if (Translators::TranslateLevel(member.level) < m_level) {
+		return;
+	}
+
 	std::string buildString = BuildFormattedEntry(member);
 
 	bool usingDefaultColor = true;

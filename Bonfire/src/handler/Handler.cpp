@@ -4,6 +4,4 @@
 
 // ========== Protected Definitions ==========
 
-
-
 // ========== Private Definitions ==========
