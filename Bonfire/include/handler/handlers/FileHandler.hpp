@@ -27,27 +27,20 @@ public:
 	* @param member the log entry to be output
 	*/
 	void Output(QueueMember member) override;
-
+	
 protected:
 	/**
-	* Build a formatted log entry
+	* Apply the format string directives
 	*
-	* @param member the log entry to be formated
+	* @param member& a reference to a log entry
+	* @param letter a specific directive
 	*
-	* @return the formatted entrystring
+	* @return the string to inject
 	*/
-	std::string BuildFormattedEntry(QueueMember member) override;
+	std::string SortFormatElement(QueueMember& member, char letter) override;
 
 private:
 	std::string m_fileName;
 	std::string m_filePath;
 	std::string m_logDir;
-
-	/**
-	* Apply the format string directives
-	* 
-	* @param member& a reference to a log entry
-	* @param letter a specific directive
-	*/
-	std::string SortFormatElement(QueueMember& member, char letter);
 };

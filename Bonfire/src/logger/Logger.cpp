@@ -52,24 +52,24 @@ void Logger::addTerminalHandler(std::string format, std::string level) {
 	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
 }
 
-void Logger::debug(std::string entry) {
-	PushToQueue("DEBUG", entry);
+void Logger::debug(std::string message) {
+	PushToQueue("DEBUG", message);
 }
 
-void Logger::info(std::string entry) {
-	PushToQueue("INFO", entry);
+void Logger::info(std::string message) {
+	PushToQueue("INFO", message);
 }
 
-void Logger::warning(std::string entry) {
-	PushToQueue("WARNING", entry);
+void Logger::warning(std::string message) {
+	PushToQueue("WARNING", message);
 }
 
-void Logger::error(std::string entry) {
-	PushToQueue("ERROR", entry);
+void Logger::error(std::string message) {
+	PushToQueue("ERROR", message);
 }
 
-void Logger::critical(std::string entry) {
-	PushToQueue("CRITICAL", entry);
+void Logger::critical(std::string message) {
+	PushToQueue("CRITICAL", message);
 }
 
 // ========== Private Definitions ==========

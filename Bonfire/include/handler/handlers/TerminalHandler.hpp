@@ -28,12 +28,12 @@
 */
 class TerminalHandler : public Handler {
 public:
-	/**
+	/*
 	* Constructor
 	*/
 	TerminalHandler(std::string format, int level = NOTSET_LEVEL);
 
-	/**
+	/*
 	* Output an entry to the terminal
 	*
 	* @param member the log entry to be output
@@ -41,21 +41,13 @@ public:
 	void Output(QueueMember member) override;
 
 protected:
-	/**
-	* Build a formatted log entry
-	*
-	* @param member the log entry to be formated
-	*
-	* @return the formatted entrystring
-	*/
-	std::string BuildFormattedEntry(QueueMember member) override;
-
-private:
-	/**
+	/*
 	* Apply the format string directives
 	*
 	* @param member& a reference to a log entry
 	* @param letter a specific directive
+	*
+	* @return the string to inject
 	*/
-	std::string SortFormatElement(QueueMember& member, char letter);
+	std::string SortFormatElement(QueueMember& member, char letter) override;
 };

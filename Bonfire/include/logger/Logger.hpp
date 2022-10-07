@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "../handler/Handler.hpp"
 #include "../core.hpp"
 #include "../util/Util.hpp"
 #include "../handler/Handler.hpp"
@@ -9,9 +8,9 @@
 #include "../worker/log_worker.hpp"
 
 /* 
-* Deirectives for each of the individual log 
+* Directives for each of the individual log 
 * levels. These levels follow the conventional
-* Python log levels defined here
+* Python log levels defined here:
 * https://docs.python.org/3/library/logging.html
 */
 #define CRITICAL_LEVEL 50
@@ -122,7 +121,7 @@ private:
 	HandlerManager m_handlerManager = HandlerManager();
 	std::string m_loggerName;
 	std::string m_filePath;
-	unsigned int m_delay; // delay in seconds
+	unsigned int m_delay;
 	std::vector<std::thread> m_threads;
 
 	/**
