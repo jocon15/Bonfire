@@ -30,7 +30,7 @@ private:
 	* Logic that calls the output function of all the handlers in HandlerManager
 	* 
 	* @param handlerManager& a reference to the HandlerManager
-	* @param member the log entry to be logged
+	* @param member a reference to the log entry to be logged
 	*/
-	static void OutputAllHandlers(HandlerManager& handlerManager, QueueMember member);
+	static void OutputAllHandlers(HandlerManager& handlerManager, QueueMember& member);
 };

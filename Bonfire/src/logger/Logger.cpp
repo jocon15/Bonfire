@@ -29,6 +29,7 @@ Logger::Logger(const Logger&) {
 Logger::~Logger() {
 	// tell the listener thread to begin cleanup
 	m_queueManager.SetSignalStop();
+
 	// end the stored threads
 	for (auto& t : m_threads) t.join();
 }
@@ -86,9 +87,9 @@ void Logger::PushToQueue(std::string level, std::string message) {
 
 std::string Logger::GetDateTime() {
 	std::string dateTime;
-	time_t t;														//t passed as argument in function time()
-	struct tm* tt;													//declaring variable for localtime()
-	time(&t);														//passing argument to time()
+	time_t t;                                    //t passed as argument in function time()
+	struct tm* tt;                               //declaring variable for localtime()
+	time(&t);                                    //passing argument to time()
 	tt = localtime(&t);
 	dateTime = asctime(tt);
 	dateTime.erase(remove(dateTime.begin(),

@@ -20,7 +20,6 @@ void LogWorker::Listener(QueueManager& queueManager, HandlerManager& handlerMana
 			int size = queueManager.GetQueueSize();
 			for (unsigned int i = 0; i < size; i++) {
 				member = queueManager.Pop();
-				//std::cout << member.level << std::endl;
 				OutputAllHandlers(handlerManager, member);
 			}
 			return;
@@ -30,12 +29,11 @@ void LogWorker::Listener(QueueManager& queueManager, HandlerManager& handlerMana
 
 // ========== Private Definitions ===========
 
-void LogWorker::OutputAllHandlers(HandlerManager& handlerManager, QueueMember member) {
-	// loop through all the handlers and tell them to 
-	// perform their implementation of Output
-
+void LogWorker::OutputAllHandlers(HandlerManager& handlerManager, QueueMember& member) {
+	// get a vector of current handlers
 	std::vector<std::shared_ptr<Handler>> handlers = handlerManager.GetHandlers();
 
+	// tell each handler to output the log entry
 	for (unsigned int i = 0; i < handlers.size(); i++) {
 		handlers.at(i)->Output(member);
 	}

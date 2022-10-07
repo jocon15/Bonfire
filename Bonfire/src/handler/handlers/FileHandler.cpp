@@ -10,15 +10,13 @@ FileHandler::FileHandler(std::string fileName, std::string logDir, std::string f
 }
 
 void FileHandler::Output(QueueMember member) {
-	// don't log anything that is beneath the client defined level
+	// filter
 	if (Translators::TranslateLevel(member.level) < m_level) {
 		return;
 	}
 	
-	// construct the message
 	std::string entry = BuildFormattedEntry(member);
 
-	// write to file
 	std::ofstream logFS;
 	logFS.open(m_filePath + m_fileName, std::ios::app);
 	logFS << entry << std::endl;
