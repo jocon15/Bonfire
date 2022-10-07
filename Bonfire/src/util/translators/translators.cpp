@@ -1,7 +1,9 @@
 #include "../../../include/util/translators/translators.hpp"
 
 int Translators::TranslateLevel(std::string level) {
-	if (level == "debug" || level == "DEBUG")
+	if (level == "notset" || level == "NOTSET")
+		return NOTSET_LEVEL;
+	else if (level == "debug" || level == "DEBUG")
 		return DEBUG_LEVEL;
 	else if (level == "info" || level == "INFO")
 		return INFO_LEVEL;

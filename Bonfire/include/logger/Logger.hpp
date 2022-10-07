@@ -8,17 +8,24 @@
 #include "../handler/handlers/TerminalHandler.hpp"
 #include "../worker/log_worker.hpp"
 
-// definitions for logging levels
+/* 
+* Deirectives for each of the individual log 
+* levels. These levels follow the conventional
+* Python log levels defined here
+* https://docs.python.org/3/library/logging.html
+*/
+#define CRITICAL_LEVEL 50
+#define ERROR_LEVEL    40
+#define WARNING_LEVEL  30
+#define INFO_LEVEL     20
+#define DEBUG_LEVEL    10
+#define NOTSET_LEVEL   0
 
-#define CRITICAL_LEVEL 40
-#define CRITICAL_LEVEL 40
-#define ERROR_LEVEL    30
-#define WARNING_LEVEL  20
-#define INFO_LEVEL     10
-#define DEBUG_LEVEL    0
-
-// delay to use for the background thread
-
+/*
+* Directive for the default background thread delay. 
+* The client can specify their own delay but the 
+* default is set to 1 second.
+*/
 #define DEFAULT_DELAY 1
 
 /**
@@ -27,10 +34,12 @@
 * public functions allow for a hassle free experience while having
 * all of the annoying multithreading details abstracted away.
 * Simply intantiate and log away.
-* This class uses a queue to acts as a log entry buffer. The main
+* This class uses a queue to act as a log entry buffer. The main
 * thread adds entries to the queue while the listener removes entries.
 * This allows the main thread to perform tasks independent of the
 * overhead of writing to a file every time theres a log message.
+* The client should add handlers to define how and where the entries
+* should be logged.
 */
 class BONFIRE_API Logger {
 public:

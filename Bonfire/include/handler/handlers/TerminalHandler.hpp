@@ -2,6 +2,13 @@
 
 #include "../Handler.hpp"
 
+/*
+* Directives that define the different colors that
+* can be used in the terminal output on a black 
+* background. There are many more directives that
+* could be defined for those cases but are excluded
+* for clarity purposes.
+*/
 #define CUSTOM_FOREGROUND_BLUE        0x0001
 #define CUSTOM_FOREGROUND_GREEN       0x0002
 #define CUSTOM_FOREGROUND_LIGHT_BLUE  0x0003
@@ -12,12 +19,43 @@
 #define CUSTOM_FOREGROUND_GREY        0x0008
 #define CUSTOM_FOREGROUND_BRIGHT_BLUE 0x0009
 
+/*
+* The TerminalHandler class is a subclass of the Handler class.
+* As discussed in the Handler class, this subclass is
+* created by the Logger object. TerminalHandler implements the
+* virtual methods defined in Handler to output the log
+* entry to the terminal.
+*/
 class TerminalHandler : public Handler {
 public:
-	TerminalHandler(std::string format, int level = DEBUG_LEVEL);
+	/**
+	* Constructor
+	*/
+	TerminalHandler(std::string format, int level = NOTSET_LEVEL);
+
+	/**
+	* Output an entry to the terminal
+	*
+	* @param member the log entry to be output
+	*/
 	void Output(QueueMember member) override;
+
 protected:
+	/**
+	* Build a formatted log entry
+	*
+	* @param member the log entry to be formated
+	*
+	* @return the formatted entrystring
+	*/
 	std::string BuildFormattedEntry(QueueMember member) override;
+
 private:
+	/**
+	* Apply the format string directives
+	*
+	* @param member& a reference to a log entry
+	* @param letter a specific directive
+	*/
 	std::string SortFormatElement(QueueMember& member, char letter);
 };
