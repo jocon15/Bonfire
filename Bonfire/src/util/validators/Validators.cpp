@@ -29,7 +29,14 @@ std::string Validators::ValidateFilePath(std::string path) {
 }
 
 std::string Validators::ValidateFormat(std::string format){
-	// NOT IMPLEMENTED YET
+	
+	/*
+	* So far, there are no known characters that could be in the 
+	* format string that need to be validated against.
+	* 
+	* Until then, this ValidateFormat function will be called
+	* but will just return the original format string.
+	*/
 
 	return format;
 }
