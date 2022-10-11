@@ -1,11 +1,7 @@
 #pragma once
 
+#include "../pch.hpp"
 #include "../util/Util.hpp"
-
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <Windows.h>
 
 /*
 * This abstract class serves as a template for creating Handler 
@@ -16,7 +12,7 @@
 * create that handler subclass. Log entries will now end up where
 * each handler tells it to go.
 */
-class Handler {
+class PerformanceHandler {
 public:
 	/*
 	* Output the log entry

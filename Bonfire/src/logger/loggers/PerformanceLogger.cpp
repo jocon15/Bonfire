@@ -7,7 +7,7 @@ PerformanceLogger::PerformanceLogger() {
 	m_delay = DEFAULT_DELAY;
 
 	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 PerformanceLogger::PerformanceLogger(std::string loggerName, unsigned int delay) {
@@ -15,7 +15,7 @@ PerformanceLogger::PerformanceLogger(std::string loggerName, unsigned int delay)
 	m_delay = delay;
 
 	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 PerformanceLogger::PerformanceLogger(const PerformanceLogger&) {
@@ -23,7 +23,7 @@ PerformanceLogger::PerformanceLogger(const PerformanceLogger&) {
 	m_delay = DEFAULT_DELAY;
 
 	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
 PerformanceLogger::~PerformanceLogger() {
@@ -41,7 +41,7 @@ void PerformanceLogger::addFileHandler(std::string fileName, std::string logDir,
 	int intLevel = Translators::TranslateLevel(level);
 
 	// add a file handler to the list
-	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new FileHandler(
+	m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new FileHandler(
 		validatedFileName, validatedLogDir, validattedFormat, intLevel)));
 }
 
@@ -50,7 +50,7 @@ void PerformanceLogger::addTerminalHandler(std::string format, std::string level
 	int intLevel = Translators::TranslateLevel(level);
 
 	// add a terminal handler to the list
-	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
+	m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new TerminalHandler(validatedFormat, intLevel)));
 }
 
 void PerformanceLogger::debug(std::string message) {

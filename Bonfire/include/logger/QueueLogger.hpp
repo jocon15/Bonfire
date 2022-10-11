@@ -4,7 +4,7 @@
 // want to implement the queue based multithreaded system
 // they have shared pointers to 
 
-#include "../Core.hpp"
+#include "../pch.hpp"
 #include "../manager/queue_manager.hpp"
 #include "../worker/log_worker.hpp"
 
@@ -16,15 +16,21 @@
 #define DEFAULT_DELAY 1
 
 class QueueLogger {
-protected:
-	QueueManager m_queueManager = QueueManager();
-	unsigned int m_delay;
-	std::vector<std::thread> m_threads;
 public:
+	//QueueLogger();
+	
+	//QueueLogger(const QueueLogger&);
+
 	/**
 	* Get the current local date and time
 	*
 	* @return the date and time in format "D M d h:m:s Y"
 	*/
-	std::string GetDateTime();
+	static std::string GetDateTime();
+
+protected:
+	QueueManager m_queueManager = QueueManager();
+	unsigned int m_delay;
+	std::vector<std::thread> m_threads;
+
 };

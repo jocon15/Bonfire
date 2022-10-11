@@ -1,10 +1,10 @@
-#include "../../include/handler/Handler.hpp"
+#include "../../include/handler/PerformanceHandler.hpp"
 
 // ========== Public Definitions ==========
 
 // ========== Protected Definitions ==========
 
-std::string Handler::BuildFormattedEntry(QueueMember member) {
+std::string PerformanceHandler::BuildFormattedEntry(QueueMember member) {
 	std::string buildString;
 	unsigned int i = 0;
 

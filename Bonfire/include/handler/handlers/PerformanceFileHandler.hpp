@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Handler.hpp"
+#include "../PerformanceHandler.hpp"
 
 /* 
 * The FileHandler class is a subclass of the Handler class.
@@ -9,7 +9,7 @@
 * virtual methods defined in Handler to output the log 
 * entry to a file.
 */
-class FileHandler : public Handler {
+class FileHandler : public PerformanceHandler {
 public:
 	/**
 	* Constructor 

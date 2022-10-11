@@ -1,10 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <mutex>
-#include <memory>
+#include "../pch.hpp"
 
-#include "../handler/Handler.hpp"
+#include "../handler/PerformanceHandler.hpp"
 
 /*
 * This class is responsible for managinng handlers 
@@ -32,16 +30,16 @@ public:
 	* 
 	* @param handler a shared pointer to a handler instance
 	*/
-	void AddHandler(std::shared_ptr<Handler> handler);
+	void AddHandler(std::shared_ptr<PerformanceHandler> handler);
 
 	/*
 	* Get the vector of handlers
 	* 
 	* @return a vector of shared pointers to handler instances
 	*/
-	std::vector<std::shared_ptr<Handler>> GetHandlers();
+	std::vector<std::shared_ptr<PerformanceHandler>> GetHandlers();
 
 private:
 	std::mutex m_handlersMutex;
-	std::vector<std::shared_ptr<Handler>> m_handlers;
+	std::vector<std::shared_ptr<PerformanceHandler>> m_handlers;
 };

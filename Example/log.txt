@@ -1,8 +1,8 @@
-DEBUG--bonFireLogger--Thu Oct  6 21:15:47 2022--For debug purposes only1
-DEBUG--bonFireLogger--Thu Oct  6 21:15:47 2022--For debug purposes only2
-INFO--bonFireLogger--Thu Oct  6 21:15:47 2022--Hello world1
-INFO--bonFireLogger--Thu Oct  6 21:15:47 2022--Hello world2
-WARNING--bonFireLogger--Thu Oct  6 21:15:47 2022--Uh oh something's wrong!
-ERROR--bonFireLogger--Thu Oct  6 21:15:47 2022--There's an error
-CRITICAL--bonFireLogger--Thu Oct  6 21:15:47 2022--Oh no, I think I might fall1
-CRITICAL--bonFireLogger--Thu Oct  6 21:15:47 2022--Oh no, I think I might fall2
+DEBUG--bonFireLogger--Tue Oct 11 12:34:26 2022--For debug purposes only1
+DEBUG--bonFireLogger--Tue Oct 11 12:34:26 2022--For debug purposes only2
+INFO--bonFireLogger--Tue Oct 11 12:34:26 2022--Hello world1
+INFO--bonFireLogger--Tue Oct 11 12:34:26 2022--Hello world2
+WARNING--bonFireLogger--Tue Oct 11 12:34:26 2022--Uh oh something's wrong!
+ERROR--bonFireLogger--Tue Oct 11 12:34:26 2022--There's an error
+CRITICAL--bonFireLogger--Tue Oct 11 12:34:26 2022--Oh no, I think I might fall1
+CRITICAL--bonFireLogger--Tue Oct 11 12:34:26 2022--Oh no, I think I might fall2

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "../../pch.hpp"
 
 /*
 * This struct defines the individual data
@@ -15,4 +15,5 @@ struct QueueMember {
 	std::string level;
 	std::string datetime;
 	std::string message;
+	std::string type;
 };

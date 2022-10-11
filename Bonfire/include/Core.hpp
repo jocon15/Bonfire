@@ -13,16 +13,5 @@
 // turn off warnings
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <queue>
-#include <string>
-#include <mutex>
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <atomic>
-#include <fstream>
-#include <stdexcept>
-#include <ctime>
-
 #include "../include/logger/loggers/CustomLogger.hpp"
 #include "../include/logger/loggers/PerformanceLogger.hpp"

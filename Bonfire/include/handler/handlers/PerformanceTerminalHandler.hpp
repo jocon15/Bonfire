@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Handler.hpp"
+#include "../PerformanceHandler.hpp"
 
 /*
 * Directives that define the different colors that
@@ -26,7 +26,7 @@
 * virtual methods defined in Handler to output the log
 * entry to the terminal.
 */
-class TerminalHandler : public Handler {
+class TerminalHandler : public PerformanceHandler {
 public:
 	/*
 	* Constructor

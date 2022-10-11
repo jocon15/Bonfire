@@ -4,7 +4,7 @@ int main(int argc, char* argv[]) {
 
 	/* Instantiage a logger object.
 	*  Give the logger a name and a delay size in seconds. */
-	Logger logger = Logger("bonFireLogger", 1);
+	PerformanceLogger logger = PerformanceLogger("bonFireLogger", 1);
 	
 
 	/* Add a file handler to the logger */
@@ -24,4 +24,9 @@ int main(int argc, char* argv[]) {
 	logger.error("There's an error");
 	logger.critical("Oh no, I think I might fall1");
 	logger.critical("Oh no, I think I might fall2");
+
+	// don't use performance and custom at the same time
+	/*CustomLogger clog = CustomLogger(1);
+
+	clog.ToTerminal("&3[Yo bro]&");*/
 }

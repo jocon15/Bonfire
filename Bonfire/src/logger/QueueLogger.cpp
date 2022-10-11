@@ -2,7 +2,13 @@
 
 // ========== Public Definitions ==========
 
-// ========== Protected Definitions ==========
+//QueueLogger::QueueLogger() {
+//
+//}
+
+//QueueLogger::QueueLogger(const QueueLogger&) {
+//
+//}
 
 std::string QueueLogger::GetDateTime() {
 	std::string dateTime;
@@ -15,5 +21,3 @@ std::string QueueLogger::GetDateTime() {
 		dateTime.end(), '\n'), dateTime.end());
 	return dateTime;
 }
-
-// ========== Private Definitions ==========

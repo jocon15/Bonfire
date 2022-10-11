@@ -1,10 +1,11 @@
 #pragma once
 
-#include "../util/Util.hpp"
+#include "../../util/Util.hpp"
 #include "../QueueLogger.hpp"
-#include "../handler/Handler.hpp"
-#include "../handler/handlers/FileHandler.hpp"
-#include "../handler/handlers/TerminalHandler.hpp"
+#include "../../Core.hpp"
+#include "../../handler/PerformanceHandler.hpp"
+#include "../../handler/handlers/PerformanceFileHandler.hpp"
+#include "../../handler/handlers/PerformanceTerminalHandler.hpp"
 
 /* 
 * Directives for each of the individual log 
