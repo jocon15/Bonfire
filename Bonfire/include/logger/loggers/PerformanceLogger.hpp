@@ -1,11 +1,10 @@
 #pragma once
 
-#include "../core.hpp"
 #include "../util/Util.hpp"
+#include "../QueueLogger.hpp"
 #include "../handler/Handler.hpp"
 #include "../handler/handlers/FileHandler.hpp"
 #include "../handler/handlers/TerminalHandler.hpp"
-#include "../worker/log_worker.hpp"
 
 /* 
 * Directives for each of the individual log 
@@ -18,14 +17,7 @@
 #define WARNING_LEVEL  30
 #define INFO_LEVEL     20
 #define DEBUG_LEVEL    10
-#define NOTSET_LEVEL   0
-
-/*
-* Directive for the default background thread delay. 
-* The client can specify their own delay but the 
-* default is set to 1 second.
-*/
-#define DEFAULT_DELAY 1
+#define NOTSET_LEVEL   0	
 
 /**
 * This class handles the entire logging implementation for the
@@ -40,12 +32,12 @@
 * The client should add handlers to define how and where the entries
 * should be logged.
 */
-class BONFIRE_API Logger {
+class BONFIRE_API PerformanceLogger: public QueueLogger {
 public:
 	/**
 	* Default constructor
 	*/
-	Logger();
+	PerformanceLogger();
 
 	/**
 	* Constructor
@@ -53,17 +45,17 @@ public:
 	* @param loggerName the name of the logger
 	* @param delay the listener thread delay time between queue checks
 	*/
-	Logger(std::string loggerName, unsigned int delay = 1);
+	PerformanceLogger(std::string loggerName, unsigned int delay = 1);
 
 	/**
 	* Copy constructor
 	*/
-	Logger(const Logger&);
+	PerformanceLogger(const PerformanceLogger&);
 
 	/**
 	* Destructor
 	*/
-	~Logger();
+	~PerformanceLogger();
 
 	/**
 	* Add a file handler
@@ -117,11 +109,8 @@ public:
 	void critical(std::string message);
 
 private:
-	QueueManager m_queueManager = QueueManager();
 	HandlerManager m_handlerManager = HandlerManager();
 	std::string m_loggerName;
-	unsigned int m_delay;
-	std::vector<std::thread> m_threads;
 
 	/**
 	* Push a message onto the queue
@@ -130,11 +119,4 @@ private:
 	* @param message the message to log
 	*/
 	void PushToQueue(std::string level, std::string message);
-
-	/**
-	* Get the current local date and time
-	*
-	* @return the date and time in format "D M d h:m:s Y"
-	*/
-	std::string GetDateTime();
 };

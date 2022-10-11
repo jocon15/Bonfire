@@ -24,4 +24,5 @@
 #include <stdexcept>
 #include <ctime>
 
-#include "logger/Logger.hpp"
+#include "../include/logger/loggers/CustomLogger.hpp"
+#include "../include/logger/loggers/PerformanceLogger.hpp"

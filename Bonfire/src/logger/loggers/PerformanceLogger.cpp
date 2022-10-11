@@ -1,8 +1,8 @@
-#include "../../include/logger/Logger.hpp"
+#include "../../../include/logger/loggers/PerformanceLogger.hpp"
 
 // ========== Public Definitions ==========
 
-Logger::Logger() {
+PerformanceLogger::PerformanceLogger() {
 	m_loggerName = "root";
 	m_delay = DEFAULT_DELAY;
 
@@ -10,7 +10,7 @@ Logger::Logger() {
 	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
-Logger::Logger(std::string loggerName, unsigned int delay) {
+PerformanceLogger::PerformanceLogger(std::string loggerName, unsigned int delay) {
 	m_loggerName = loggerName;
 	m_delay = delay;
 
@@ -18,7 +18,7 @@ Logger::Logger(std::string loggerName, unsigned int delay) {
 	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
-Logger::Logger(const Logger&) {
+PerformanceLogger::PerformanceLogger(const PerformanceLogger&) {
 	m_loggerName = "root";
 	m_delay = DEFAULT_DELAY;
 
@@ -26,7 +26,7 @@ Logger::Logger(const Logger&) {
 	m_threads.push_back(std::thread(&LogWorker::Listener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
 }
 
-Logger::~Logger() {
+PerformanceLogger::~PerformanceLogger() {
 	// tell the listener thread to begin cleanup
 	m_queueManager.SetSignalStop();
 
@@ -34,7 +34,7 @@ Logger::~Logger() {
 	for (auto& t : m_threads) t.join();
 }
 
-void Logger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level) {
+void PerformanceLogger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level) {
 	std::string validatedFileName = Validators::ValidateFileName(fileName);
 	std::string validatedLogDir = Validators::ValidateFilePath(logDir);
 	std::string validattedFormat = Validators::ValidateFormat(format);
@@ -45,7 +45,7 @@ void Logger::addFileHandler(std::string fileName, std::string logDir, std::strin
 		validatedFileName, validatedLogDir, validattedFormat, intLevel)));
 }
 
-void Logger::addTerminalHandler(std::string format, std::string level) {
+void PerformanceLogger::addTerminalHandler(std::string format, std::string level) {
 	std::string validatedFormat = Validators::ValidateFormat(format);
 	int intLevel = Translators::TranslateLevel(level);
 
@@ -53,29 +53,29 @@ void Logger::addTerminalHandler(std::string format, std::string level) {
 	m_handlerManager.AddHandler(std::shared_ptr<Handler>(new TerminalHandler(validatedFormat, intLevel)));
 }
 
-void Logger::debug(std::string message) {
+void PerformanceLogger::debug(std::string message) {
 	PushToQueue("DEBUG", message);
 }
 
-void Logger::info(std::string message) {
+void PerformanceLogger::info(std::string message) {
 	PushToQueue("INFO", message);
 }
 
-void Logger::warning(std::string message) {
+void PerformanceLogger::warning(std::string message) {
 	PushToQueue("WARNING", message);
 }
 
-void Logger::error(std::string message) {
+void PerformanceLogger::error(std::string message) {
 	PushToQueue("ERROR", message);
 }
 
-void Logger::critical(std::string message) {
+void PerformanceLogger::critical(std::string message) {
 	PushToQueue("CRITICAL", message);
 }
 
 // ========== Private Definitions ==========
 
-void Logger::PushToQueue(std::string level, std::string message) {
+void PerformanceLogger::PushToQueue(std::string level, std::string message) {
 	QueueMember member = QueueMember();
 	member.loggerName = m_loggerName;
 	member.level = level;
@@ -83,16 +83,4 @@ void Logger::PushToQueue(std::string level, std::string message) {
 	member.message = message;
 
 	m_queueManager.Push(member);
-}
-
-std::string Logger::GetDateTime() {
-	std::string dateTime;
-	time_t t;                                    //t passed as argument in function time()
-	struct tm* tt;                               //declaring variable for localtime()
-	time(&t);                                    //passing argument to time()
-	tt = localtime(&t);
-	dateTime = asctime(tt);
-	dateTime.erase(remove(dateTime.begin(),
-		dateTime.end(), '\n'), dateTime.end());
-	return dateTime;
 }
