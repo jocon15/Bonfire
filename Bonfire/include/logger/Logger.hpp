@@ -120,7 +120,6 @@ private:
 	QueueManager m_queueManager = QueueManager();
 	HandlerManager m_handlerManager = HandlerManager();
 	std::string m_loggerName;
-	std::string m_filePath;
 	unsigned int m_delay;
 	std::vector<std::thread> m_threads;
 
