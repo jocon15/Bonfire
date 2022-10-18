@@ -84,8 +84,8 @@ project "Example"
 		systemversion "latest"
 
 		defines{
-			"_CONSOLE",
-			"GE_PLATFORM_WINDOWS"
+			"_CONSOLE"--,
+			--"GE_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"

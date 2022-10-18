@@ -1,13 +1,9 @@
 #pragma once
 
-#ifdef GE_PLATFORM_WINDOWS
-	#ifdef COMPILING_DLL
-		#define BONFIRE_API __declspec(dllexport)
-	#else
-		#define BONFIRE_API __declspec(dllimport)
-	#endif
+#ifdef COMPILING_DLL
+	#define BONFIRE_API __declspec(dllexport)
 #else
-	#error Bonfire only supports Windows!
+	#define BONFIRE_API __declspec(dllimport)
 #endif
 
 // turn off warnings
