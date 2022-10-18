@@ -35,7 +35,7 @@ project "Bonfire"
 			"BONFIRE_EXPORTS",
 			"_WINDOWS",
 			"_USRDLL",
-			"GE_PLATFORM_WINDOWS",
+			--"GE_PLATFORM_WINDOWS",
 			"COMPILING_DLL"
 		}
 
