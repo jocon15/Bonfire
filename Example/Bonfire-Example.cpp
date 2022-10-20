@@ -4,11 +4,11 @@ int main(int argc, char* argv[]) {
 
 	/* Instantiage a logger object.
 	*  Give the logger a name and a delay size in seconds. */
-	PerformanceLogger logger = PerformanceLogger("bonFireLogger", 1);
+	bf::PerformanceLogger logger = bf::PerformanceLogger("bonFireLogger", 1000);
 	
 
 	/* Add a file handler to the logger */
-	logger.addFileHandler("log.txt", "", "%L--%N--%D--%M", "DEBUG");
+	logger.addFileHandler("log.txt", "%L--%N--%D--%M", "DEBUG");
 
 
 	/* Add a terminal handler to the logger	*/

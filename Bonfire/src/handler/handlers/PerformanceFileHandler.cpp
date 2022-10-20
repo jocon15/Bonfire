@@ -2,10 +2,9 @@
 
 // ========== Public Definitions ==========
 
-FileHandler::FileHandler(std::string fileName, std::string logDir, std::string format, int level){
+FileHandler::FileHandler(std::string filePath, std::string format, int level){
+	m_filePath = filePath;
 	m_format = format;
-	m_fileName = fileName;
-	m_logDir = logDir;
 	m_level = level;
 }
 
@@ -18,7 +17,7 @@ void FileHandler::Output(QueueMember member) {
 	std::string entry = BuildFormattedEntry(member);
 
 	std::ofstream logFS;
-	logFS.open(m_filePath + m_fileName, std::ios::app);
+	logFS.open(m_filePath, std::ios::app);
 	logFS << entry << std::endl;
 	logFS.flush();
 	logFS.close();

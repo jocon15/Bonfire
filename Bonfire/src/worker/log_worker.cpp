@@ -7,7 +7,7 @@ void LogWorker::PerformanceListener(QueueManager& queueManager, HandlerManager& 
 
 	while (true) {
 		// wait delay seconds and allow some logs to be added to the queue
-		std::this_thread::sleep_for(std::chrono::seconds(delay));
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
 		if (queueManager.GetQueueSize() > 0) {
 			// the queue is not empty
@@ -18,7 +18,7 @@ void LogWorker::PerformanceListener(QueueManager& queueManager, HandlerManager& 
 		if (queueManager.GetSignalStop()) {
 			// finish logging the rest of the entries in the queue
 			int size = queueManager.GetQueueSize();
-			for (unsigned int i = 0; i < size; i++) {
+			for (unsigned int i = 0; i < unsigned(size); i++) {
 				member = queueManager.Pop();
 				OutputAllHandlers(handlerManager, member);
 			}
@@ -31,7 +31,7 @@ void LogWorker::CustomListener(QueueManager& queueManager, CustomTerminalHandler
 	QueueMember member;
 
 	while (true) {
-		std::this_thread::sleep_for(std::chrono::seconds(delay));
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 
 		if (queueManager.GetQueueSize() > 0) {
 			// the queue is not empty
@@ -42,7 +42,7 @@ void LogWorker::CustomListener(QueueManager& queueManager, CustomTerminalHandler
 		if (queueManager.GetSignalStop()) {
 			// finish logging the rest of the entries in the queue
 			int size = queueManager.GetQueueSize();
-			for (unsigned int i = 0; i < size; i++) {
+			for (unsigned int i = 0; i < unsigned(size); i++) {
 				member = queueManager.Pop();
 				OutputEntry(terminalHandler, fileHandler, member);
 			}

@@ -36,6 +36,7 @@ project "Bonfire"
 			"_WINDOWS",
 			"_USRDLL",
 			--"GE_PLATFORM_WINDOWS",
+			"_CRT_SECURE_NO_WARNINGS",
 			"COMPILING_DLL"
 		}
 

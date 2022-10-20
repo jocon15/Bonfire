@@ -23,6 +23,11 @@
 
 class CustomTerminalHandler: public CustomHandler {
 public:
+	/**
+	* Output an entry to the terminal
+	*
+	* @param member the log entry to be output
+	*/
 	void Output(QueueMember& member) override;
 private:
 

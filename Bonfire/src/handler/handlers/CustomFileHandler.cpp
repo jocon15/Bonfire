@@ -10,10 +10,6 @@ CustomFileHandler::CustomFileHandler(std::string filePath) {
 	m_filePath = filePath;
 }
 
-void CustomFileHandler::UpdateFilePath(std::string filePath) {
-	m_filePath = filePath;
-}
-
 void CustomFileHandler::Output(QueueMember& member) {
 	std::ofstream logFS;
 	logFS.open(m_filePath, std::ios::app);

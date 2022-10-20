@@ -14,12 +14,11 @@ public:
 	/**
 	* Constructor 
 	* 
-	* @param fileName the filename of the desired log file
-	* @param logDir the path of the log file 
+	* @param fileName the filePath of the desired log file
 	* @param format the format string for the log entries
 	* @param level the base logging level to filter entries
 	*/
-	FileHandler(std::string fileName="log.txt", std::string logDir="", std::string format="%L %N %D %M", int level = NOTSET_LEVEL);
+	FileHandler(std::string filePath="log.txt", std::string format="%L %N %D %M", int level = NOTSET_LEVEL);
 
 	/**
 	* Output an entry to the file
@@ -40,7 +39,5 @@ protected:
 	std::string SortFormatElement(QueueMember& member, char letter) override;
 
 private:
-	std::string m_fileName;
 	std::string m_filePath;
-	std::string m_logDir;
 };

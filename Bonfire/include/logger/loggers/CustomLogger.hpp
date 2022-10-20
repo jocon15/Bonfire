@@ -3,31 +3,53 @@
 #include "../QueueLogger.hpp"
 #include "../../Core.hpp"
 
-class BONFIRE_API CustomLogger: public QueueLogger {
-public:
-	//CustomLogger();
+namespace bf {
 
-	CustomLogger(unsigned int delay = 1);
+	class BONFIRE_API CustomLogger : public QueueLogger {
+	public:
+		/**
+		* Constructor
+		* 
+		* @param delay the background thread delay in milliseconds
+		*/
+		CustomLogger(unsigned int delay = 1000);
 
-	CustomLogger(const CustomLogger&);
+		/**
+		* Copy constructor
+		*/
+		CustomLogger(const CustomLogger&);
 
-	~CustomLogger();
+		/*
+		* Destructr
+		*/
+		~CustomLogger();
 
-	void ToFile(std::string filePath, std::string entry);
+		/**
+		* Write an entry to a file
+		* 
+		* @param filePath the path of the target file
+		* @param entry the entry to write to the file
+		*/
+		void ToFile(std::string filePath, std::string entry);
 
-	void ToTerminal(std::string entry);
+		/**
+		* Print an entry in the terminal
+		*
+		* @param entry the entry to write to the file
+		*/
+		void ToTerminal(std::string entry);
 
-private:
-	//debug
-	/*QueueManager m_queueManager = QueueManager();
-	unsigned int m_delay;
-	std::vector<std::thread> m_threads;
-	static std::string GetDateTime();*/
-	//debug
+	private:
+		CustomTerminalHandler m_terminalHandler = CustomTerminalHandler();
+		CustomFileHandler m_fileHandler = CustomFileHandler();
 
-	CustomTerminalHandler m_terminalHandler = CustomTerminalHandler();
-	CustomFileHandler m_fileHandler = CustomFileHandler();
-	// the messages in the queue are just going to use
-	// the message attribute of the QueueMember in the queue
-	void PushToQueue(std::string type, std::string entry);
-};
+		/*
+		* Push an entry to the queue
+		* 
+		* @param type the type of entry being added
+		* @param type the entry to add
+		*/
+		void PushToQueue(std::string type, std::string entry);
+	};
+
+}

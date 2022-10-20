@@ -1,86 +1,68 @@
 #include "../../../include/logger/loggers/PerformanceLogger.hpp"
 
-// ========== Public Definitions ==========
+namespace bf {
 
-PerformanceLogger::PerformanceLogger() {
-	m_loggerName = "root";
-	m_delay = DEFAULT_DELAY;
+	// ========== Public Definitions ==========
 
-	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
-}
+	PerformanceLogger::PerformanceLogger() {
+		m_loggerName = "root";
+		m_delay = DEFAULT_DELAY;
 
-PerformanceLogger::PerformanceLogger(std::string loggerName, unsigned int delay) {
-	m_loggerName = loggerName;
-	m_delay = delay;
+		// start the listener thread and add it to the stored threads
+		m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	}
 
-	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
-}
+	PerformanceLogger::PerformanceLogger(std::string loggerName, unsigned int delay) {
+		m_loggerName = loggerName;
+		m_delay = delay;
 
-PerformanceLogger::PerformanceLogger(const PerformanceLogger&) {
-	m_loggerName = "root";
-	m_delay = DEFAULT_DELAY;
+		// start the listener thread and add it to the stored threads
+		m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	}
 
-	// start the listener thread and add it to the stored threads
-	m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
-}
+	PerformanceLogger::PerformanceLogger(const PerformanceLogger&) {
+		m_loggerName = "root";
+		m_delay = DEFAULT_DELAY;
 
-PerformanceLogger::~PerformanceLogger() {
-	// tell the listener thread to begin cleanup
-	m_queueManager.SetSignalStop();
+		// start the listener thread and add it to the stored threads
+		m_threads.push_back(std::thread(&LogWorker::PerformanceListener, std::ref(m_queueManager), std::ref(m_handlerManager), m_delay));
+	}
 
-	// end the stored threads
-	for (auto& t : m_threads) t.join();
-}
+	PerformanceLogger::~PerformanceLogger() {
+		// tell the listener thread to begin cleanup
+		m_queueManager.SetSignalStop();
 
-void PerformanceLogger::addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level) {
-	std::string validatedFileName = Validators::ValidateFileName(fileName);
-	std::string validatedLogDir = Validators::ValidateFilePath(logDir);
-	std::string validattedFormat = Validators::ValidateFormat(format);
-	int intLevel = Translators::TranslateLevel(level);
+		// end the stored threads
+		for (auto& t : m_threads) t.join();
+	}
 
-	// add a file handler to the list
-	m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new FileHandler(
-		validatedFileName, validatedLogDir, validattedFormat, intLevel)));
-}
+	void PerformanceLogger::addFileHandler(std::string filePath, std::string format, std::string level) {
+		std::string validatedFilePath = Validators::ValidateFilePath(filePath);
+		std::string validattedFormat = Validators::ValidateFormat(format);
+		int intLevel = Translators::TranslateLevel(level);
 
-void PerformanceLogger::addTerminalHandler(std::string format, std::string level) {
-	std::string validatedFormat = Validators::ValidateFormat(format);
-	int intLevel = Translators::TranslateLevel(level);
+		// add a file handler to the list
+		m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new FileHandler(
+			validatedFilePath, validattedFormat, intLevel)));
+	}
 
-	// add a terminal handler to the list
-	m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new TerminalHandler(validatedFormat, intLevel)));
-}
+	void PerformanceLogger::addTerminalHandler(std::string format, std::string level) {
+		std::string validatedFormat = Validators::ValidateFormat(format);
+		int intLevel = Translators::TranslateLevel(level);
 
-void PerformanceLogger::debug(std::string message) {
-	PushToQueue("DEBUG", message);
-}
+		// add a terminal handler to the list
+		m_handlerManager.AddHandler(std::shared_ptr<PerformanceHandler>(new TerminalHandler(validatedFormat, intLevel)));
+	}
 
-void PerformanceLogger::info(std::string message) {
-	PushToQueue("INFO", message);
-}
+	// ========== Private Definitions ==========
 
-void PerformanceLogger::warning(std::string message) {
-	PushToQueue("WARNING", message);
-}
+	void PerformanceLogger::PushToQueue(std::string level, std::string message) {
+		QueueMember member = QueueMember();
+		member.loggerName = m_loggerName;
+		member.level = level;
+		member.datetime = GetDateTime();
+		member.message = message;
 
-void PerformanceLogger::error(std::string message) {
-	PushToQueue("ERROR", message);
-}
-
-void PerformanceLogger::critical(std::string message) {
-	PushToQueue("CRITICAL", message);
-}
-
-// ========== Private Definitions ==========
-
-void PerformanceLogger::PushToQueue(std::string level, std::string message) {
-	QueueMember member = QueueMember();
-	member.loggerName = m_loggerName;
-	member.level = level;
-	member.datetime = GetDateTime();
-	member.message = message;
-
-	m_queueManager.Push(member);
+		m_queueManager.Push(member);
+	}
 }

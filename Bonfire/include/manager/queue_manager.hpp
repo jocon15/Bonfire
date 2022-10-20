@@ -42,21 +42,27 @@ public:
 	* Signal to the worker threads to start 
 	* cleanup and end join the main thread
 	*/
-	void SetSignalStop();
+	inline void SetSignalStop() {
+		m_signalCleanup = true;
+	}
 
 	/*
 	* Check the status of the stop signal
 	* 
 	* @return to stop or not to stop
 	*/
-	bool GetSignalStop();
+	inline bool GetSignalStop() {
+		return m_signalCleanup;
+	}
 
 	/*
 	* Get the current size of the queue
 	* 
 	* @return the size of the queue
 	*/
-	unsigned int GetQueueSize();
+	inline unsigned int GetQueueSize() {
+		return static_cast<unsigned int>(m_queue.size());
+	}
 
 private:
 	std::mutex m_queueMutex;

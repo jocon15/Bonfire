@@ -27,17 +27,3 @@ QueueMember QueueManager::Pop() {
 	m_queueMutex.unlock();
 	return returnMember;
 }
-
-void QueueManager::SetSignalStop() {
-	m_signalCleanup = true;
-}
-
-bool QueueManager::GetSignalStop() {
-	return m_signalCleanup;
-}
-
-unsigned int QueueManager::GetQueueSize() {
-	return m_queue.size();
-}
-
-// ========== Private Definitions ==========

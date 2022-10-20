@@ -20,104 +20,118 @@
 #define DEBUG_LEVEL    10
 #define NOTSET_LEVEL   0	
 
-/**
-* This class handles the entire logging implementation for the
-* threaded logger. The simple setup and interactions through the
-* public functions allow for a hassle free experience while having
-* all of the annoying multithreading details abstracted away.
-* Simply intantiate and log away.
-* This class uses a queue to act as a log entry buffer. The main
-* thread adds entries to the queue while the listener removes entries.
-* This allows the main thread to perform tasks independent of the
-* overhead of writing to a file every time theres a log message.
-* The client should add handlers to define how and where the entries
-* should be logged.
-*/
-class BONFIRE_API PerformanceLogger: public QueueLogger {
-public:
-	/**
-	* Default constructor
-	*/
-	PerformanceLogger();
+namespace bf{
 
 	/**
-	* Constructor
-	*
-	* @param loggerName the name of the logger
-	* @param delay the listener thread delay time between queue checks
+	* This class handles the entire logging implementation for the
+	* threaded logger. The simple setup and interactions through the
+	* public functions allow for a hassle free experience while having
+	* all of the annoying multithreading details abstracted away.
+	* Simply intantiate and log away.
+	* This class uses a queue to act as a log entry buffer. The main
+	* thread adds entries to the queue while the listener removes entries.
+	* This allows the main thread to perform tasks independent of the
+	* overhead of writing to a file every time theres a log message.
+	* The client should add handlers to define how and where the entries
+	* should be logged.
 	*/
-	PerformanceLogger(std::string loggerName, unsigned int delay = 1);
+	class BONFIRE_API PerformanceLogger : public QueueLogger {
+	public:
+		/**
+		* Default constructor
+		*/
+		PerformanceLogger();
 
-	/**
-	* Copy constructor
-	*/
-	PerformanceLogger(const PerformanceLogger&);
+		/**
+		* Constructor
+		*
+		* @param loggerName the name of the logger
+		* @param delay the background thread delay in milliseconds
+		*/
+		PerformanceLogger(std::string loggerName, unsigned int delay = 1000);
 
-	/**
-	* Destructor
-	*/
-	~PerformanceLogger();
+		/**
+		* Copy constructor
+		*/
+		PerformanceLogger(const PerformanceLogger&);
 
-	/**
-	* Add a file handler
-	*
-	* @param fileName the name of the log file
-	* @param logDir the path that the fileName file exists in (not including the fileName)
-	* @param level the logging level
-	*/
-	void addFileHandler(std::string fileName, std::string logDir, std::string format, std::string level);
+		/**
+		* Destructor
+		*/
+		~PerformanceLogger();
 
-	/**
-	* Add a terminal handler
-	*
-	* @param message the logging level
-	*/
-	void addTerminalHandler(std::string format, std::string level);
+		/**
+		* Add a file handler
+		*
+		* @param fileName the name of the log file
+		* @param logDir the path that the fileName file exists in (not including the fileName)
+		* @param level the logging level
+		*/
+		void addFileHandler(std::string filePath, std::string format, std::string level);
 
-	/**
-	* Submit a debug entry to the logger
-	*
-	* @param message the message to be logged
-	*/
-	void debug(std::string message);
+		/**
+		* Add a terminal handler
+		*
+		* @param message the logging level
+		*/
+		void addTerminalHandler(std::string format, std::string level);
 
-	/**
-	* Submit a info entry to the logger
-	*
-	* @param message the message to be logged
-	*/
-	void info(std::string message);
+		/**
+		* Submit a debug entry to the logger
+		*
+		* @param message the message to be logged
+		*/
+		inline void debug(std::string message) {
+			PushToQueue("DEBUG", message);
+		}
 
-	/**
-	* Submit a warning entry to the logger
-	*
-	* @param message the message to be logged
-	*/
-	void warning(std::string message);
+		/**
+		* Submit a info entry to the logger
+		*
+		* @param message the message to be logged
+		*/
+		inline void info(std::string message) {
+			PushToQueue("INFO", message);
+		}
 
-	/**
-	* Submit a error entry to the logger
-	*
-	* @param message the message to be logged
-	*/
-	void error(std::string message);
+		/**
+		* Submit a warning entry to the logger
+		*
+		* @param message the message to be logged
+		*/
+		inline void warning(std::string message) {
+			PushToQueue("WARNING", message);
+		}
 
-	/**
-	* Submit a critical entry to the logger
-	*
-	* @param message the message to be logged
-	*/
-	void critical(std::string message);
+		/**
+		* Submit a error entry to the logger
+		*
+		* @param message the message to be logged
+		*/
+		inline void error(std::string message) {
+			PushToQueue("ERROR", message);
+		}
 
-private:
-	HandlerManager m_handlerManager = HandlerManager();
-	std::string m_loggerName;
+		/**
+		* Submit a critical entry to the logger
+		*
+		* @param message the message to be logged
+		*/
+		inline void critical(std::string message) {
+			PushToQueue("CRITICAL", message);
+		}
 
-	/**
-	* Push a message onto the queue
-	*
-	* @param level the logging level of the entry
-	* @param message the message to log
-	*/
-	void PushToQueue(std::string level, std::string message);
-};
+	private:
+		HandlerManager m_handlerManager = HandlerManager();
+		std::string m_loggerName;
+
+		/**
+		* Push a message onto the queue
+		*
+		* @param level the logging level of the entry
+		* @param message the message to log
+		*/
+		void PushToQueue(std::string level, std::string message);
+	};
+
+}
