@@ -1,7 +1,5 @@
 #include "../../include/handler/PerformanceHandler.hpp"
 
-// ========== Public Definitions ==========
-
 // ========== Protected Definitions ==========
 
 std::string PerformanceHandler::BuildFormattedEntry(QueueMember member) {
@@ -45,5 +43,3 @@ std::string PerformanceHandler::BuildFormattedEntry(QueueMember member) {
 	}
 	return buildString;
 }
-
-// ========== Private Definitions ==========

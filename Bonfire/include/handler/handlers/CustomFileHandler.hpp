@@ -2,6 +2,11 @@
 
 #include "../CustomHandler.hpp"
 
+/*
+* CustomFileHandler is a subclass of CustomHandler. The CFH
+* handles the file output logic for custom log entries
+* targeted to the log file.
+*/
 class CustomFileHandler: public CustomHandler {
 public:
 	/**

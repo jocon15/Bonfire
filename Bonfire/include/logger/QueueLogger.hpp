@@ -1,9 +1,5 @@
 #pragma once
 
-// this Abstract Base Class is going to provide a framework for the loggers that 
-// want to implement the queue based multithreaded system
-// they have shared pointers to 
-
 #include "../pch.hpp"
 #include "../manager/queue_manager.hpp"
 #include "../worker/log_worker.hpp"
@@ -15,12 +11,12 @@
 */
 #define DEFAULT_DELAY 1
 
+/*
+* This abstract base class provides a template for the loggers
+* that implement the multithreaded queue-based logging system
+*/
 class QueueLogger {
 public:
-	//QueueLogger();
-	
-	//QueueLogger(const QueueLogger&);
-
 	/**
 	* Get the current local date and time
 	*
@@ -32,5 +28,4 @@ protected:
 	QueueManager m_queueManager = QueueManager();
 	unsigned int m_delay;
 	std::vector<std::thread> m_threads;
-
 };

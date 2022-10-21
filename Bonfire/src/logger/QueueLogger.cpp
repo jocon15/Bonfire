@@ -2,14 +2,6 @@
 
 // ========== Public Definitions ==========
 
-//QueueLogger::QueueLogger() {
-//
-//}
-
-//QueueLogger::QueueLogger(const QueueLogger&) {
-//
-//}
-
 std::string QueueLogger::GetDateTime() {
 	std::string dateTime;
 	time_t t;                                    //t passed as argument in function time()

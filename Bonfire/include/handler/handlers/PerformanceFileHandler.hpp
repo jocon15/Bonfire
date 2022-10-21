@@ -2,12 +2,10 @@
 
 #include "../PerformanceHandler.hpp"
 
-/* 
-* The FileHandler class is a subclass of the Handler class.
-* As discussed in the Handler class, this subclass is 
-* created by the Logger object. FileHandler implements the
-* virtual methods defined in Handler to output the log 
-* entry to a file.
+/*
+* PerformanceFileHandler is a subclass of PerformanceHandler. The PFH
+* handles the file output logic for performance log entries
+* targeted to the log file.
 */
 class FileHandler : public PerformanceHandler {
 public:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../pch.hpp"
+
 /*
 * Deirectives for each of the individual log
 * levels. These levels follow the conventional

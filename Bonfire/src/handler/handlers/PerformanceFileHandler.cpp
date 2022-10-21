@@ -36,5 +36,3 @@ std::string FileHandler::SortFormatElement(QueueMember& member, char letter) {
 		return member.message;
 	return "-1";
 }
-
-// ========== Private Definitions ==========

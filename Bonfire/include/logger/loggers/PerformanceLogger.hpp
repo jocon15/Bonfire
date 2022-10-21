@@ -23,17 +23,11 @@
 namespace bf{
 
 	/**
-	* This class handles the entire logging implementation for the
-	* threaded logger. The simple setup and interactions through the
-	* public functions allow for a hassle free experience while having
-	* all of the annoying multithreading details abstracted away.
-	* Simply intantiate and log away.
-	* This class uses a queue to act as a log entry buffer. The main
-	* thread adds entries to the queue while the listener removes entries.
-	* This allows the main thread to perform tasks independent of the
-	* overhead of writing to a file every time theres a log message.
-	* The client should add handlers to define how and where the entries
-	* should be logged.
+	* The PerformanceLogger class is a subclass of the QueueLogger.
+	* It uses its parent class to untilize the multithreaded
+	* queue-based logging system. PerformanceLogger provides a 
+	* standard logging format with limited options. For a more 
+	* customized experience, check out CustomLogger.
 	*/
 	class BONFIRE_API PerformanceLogger : public QueueLogger {
 	public:
@@ -133,5 +127,4 @@ namespace bf{
 		*/
 		void PushToQueue(std::string level, std::string message);
 	};
-
 }

@@ -4,9 +4,9 @@
 #include "../util/Util.hpp"
 
 /*
-* This abstract class serves as a template for creating CustomHandler 
-* subclasses. The custom logger is a more flexible logger that places
-* emphasis on customized style as opposed to performance. CustomHandler
+* This abstract class serves as a template for creating Custom Handler 
+* subclasses. Custom Handlers place more emphasis on customizability
+* as opposed to performance.
 */
 class CustomHandler {
 public:

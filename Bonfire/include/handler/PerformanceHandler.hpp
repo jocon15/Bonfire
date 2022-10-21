@@ -4,11 +4,11 @@
 #include "../util/Util.hpp"
 
 /*
-* This abstract class serves as a template for creating Handler 
-* subclasses. When you log something, you might want it to end up 
-* in multiple places. For example, you might want to show a critical
-* error in the terminal and also in a log file. The client can 
-* add a handler via the Logger object. The logger class will then 
+* This abstract class serves as a template for creating Performance
+* Handler subclasses. When you log something, you might want it to 
+* end up in multiple places. For example, you might want to show a 
+* critical error in the terminal and also in a log file. The client 
+* can add a handler via the Logger object. The logger class will then 
 * create that handler subclass. Log entries will now end up where
 * each handler tells it to go.
 */

@@ -20,11 +20,9 @@
 #define CUSTOM_FOREGROUND_BRIGHT_BLUE 0x0009
 
 /*
-* The TerminalHandler class is a subclass of the Handler class.
-* As discussed in the Handler class, this subclass is
-* created by the Logger object. TerminalHandler implements the
-* virtual methods defined in Handler to output the log
-* entry to the terminal.
+* PerformanceTerminalHandler is a subclass of PerformanceHandler. The PTH
+* handles the terminal output logic for performance log entries
+* targeted to the terminal.
 */
 class TerminalHandler : public PerformanceHandler {
 public:

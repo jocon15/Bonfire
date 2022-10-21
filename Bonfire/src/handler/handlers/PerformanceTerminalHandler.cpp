@@ -116,5 +116,3 @@ std::string TerminalHandler::SortFormatElement(QueueMember& member, char letter)
 	}
 	return "-1";
 }
-
-// ========== Private Definitions ==========

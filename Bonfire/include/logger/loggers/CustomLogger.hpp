@@ -5,6 +5,13 @@
 
 namespace bf {
 
+	/**
+	* The CustomLogger class is a subclass of the QueueLogger.
+	* It uses its parent class to untilize the multithreaded
+	* queue-based logging system. CustomLogger provides more
+	* customization than the Performance logger at the expense
+	* of not necessarily being performance intended.
+	*/
 	class BONFIRE_API CustomLogger : public QueueLogger {
 	public:
 		/**
@@ -51,5 +58,4 @@ namespace bf {
 		*/
 		void PushToQueue(std::string type, std::string entry);
 	};
-
 }

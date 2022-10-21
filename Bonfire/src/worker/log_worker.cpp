@@ -72,6 +72,6 @@ void LogWorker::OutputEntry(CustomTerminalHandler& terminalHandler, CustomFileHa
 		fileHandler.Output(member);
 	}
 	else {
-		// unrecognized output type
+		throw std::invalid_argument("Unrecognized log entry output type");
 	}
 }

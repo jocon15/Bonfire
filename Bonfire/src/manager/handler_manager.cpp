@@ -23,5 +23,3 @@ std::vector<std::shared_ptr<PerformanceHandler>> HandlerManager::GetHandlers() {
 	m_handlersMutex.unlock();
 	return returnVec;
 }
-
-// ========== Private Definitions ==========

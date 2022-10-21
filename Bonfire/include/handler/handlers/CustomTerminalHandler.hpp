@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "../CustomHandler.hpp"
 
 /*
@@ -20,7 +19,11 @@
 #define CUSTOM_FOREGROUND_GREY        0x0008
 #define CUSTOM_FOREGROUND_BRIGHT_BLUE 0x0009
 
-
+/*
+* CustomTerminalHandler is a subclass of CustomHandler. The CTH
+* handles the terminal output logic for custom log entries
+* targeted to the terminal.
+*/
 class CustomTerminalHandler: public CustomHandler {
 public:
 	/**
@@ -29,6 +32,4 @@ public:
 	* @param member the log entry to be output
 	*/
 	void Output(QueueMember& member) override;
-private:
-
 };
